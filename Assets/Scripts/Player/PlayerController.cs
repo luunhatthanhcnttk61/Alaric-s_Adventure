@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     private int currentHealth; // Máu hiện tại của player
     private int currentMana; // Mana hiện tại của player
 
-    private Rigidbody rb;
+    //private Rigidbody rb;
+    public Rigidbody rb;
     private bool isGrounded;
     private bool facingRight = true;
 
