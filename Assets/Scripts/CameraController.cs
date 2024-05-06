@@ -23,11 +23,13 @@ public class CameraController : MonoBehaviour
         }    
         pivot.transform.position = target.transform.position;
         pivot.transform.parent = target.transform;
+
+        Cursor.lockState = CursorLockMode.Locked;
          
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //Get X position of mouse and rotate target
         float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
@@ -43,6 +45,11 @@ public class CameraController : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(desiredXAngle, desiredYAngle, 0);
         transform.position = target.position - (rotation * offset);
+
+        if(transform.position.y < target.position.y)
+        {
+            transform.position = new Vector3(transform.position.x, .5f, transform.position.z);
+        }
 
         //transform.position = target.position - offset;
 
