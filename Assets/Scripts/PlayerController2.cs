@@ -10,6 +10,8 @@ public class PlayerController2 : MonoBehaviour
 
     private Vector3 moveDirection;
     public float gravityScale;
+
+    public Animator anim;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +36,10 @@ public class PlayerController2 : MonoBehaviour
             }
         }
         
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale);
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
         controller.Move(moveDirection * Time.deltaTime);
+
+        anim.SetBool("isGrounded", controller.isGrounded);
+        anim.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Vertical"))));
     }
 }
