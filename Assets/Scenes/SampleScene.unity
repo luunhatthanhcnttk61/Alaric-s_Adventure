@@ -1554,7 +1554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpForce: 50
+  jumpForce: 5
   controller: {fileID: 0}
   gravityScale: 1
   anim: {fileID: 751593796}
