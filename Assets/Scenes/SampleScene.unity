@@ -1166,7 +1166,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b845b36d8b8ba3f4eb8f692675f539b9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.54
+      value: -1.008
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b845b36d8b8ba3f4eb8f692675f539b9,
         type: 3}
@@ -1532,8 +1532,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285046505}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.474, y: 1.661, z: 16.33}
+  m_LocalRotation: {x: 0, y: 0.17794357, z: 0, w: 0.98404074}
+  m_LocalPosition: {x: 15.474, y: 1.009, z: 16.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1553,11 +1553,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933097e01fe8cf24ba3c1e052624461f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 5
+  moveSpeed: 10
+  jumpForce: 7
   controller: {fileID: 0}
   gravityScale: 1
   anim: {fileID: 751593796}
+  pivot: {fileID: 1104887220}
+  rotateSpeed: 10
+  playerModel: {fileID: 751593794}
 --- !u!143 &1285046511
 CharacterController:
   m_ObjectHideFlags: 0
