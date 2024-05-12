@@ -6,6 +6,7 @@ public class CollectItem : MonoBehaviour
 {
     public int healthValue;
     public int coinValue;
+    public GameObject collectEffect;
 
 
     // Start is called before the first frame update
@@ -35,7 +36,9 @@ public class CollectItem : MonoBehaviour
 
             // Thêm coins và health items vào player
             gameManager.AddCoins(coinValue);
+            Instantiate(collectEffect, transform.position, transform.rotation);
             gameManager.AddHealthItem(healthValue);
+            Instantiate(collectEffect, transform.position, transform.rotation);
             
             // Hủy gameobject này
             Destroy(gameObject);    
