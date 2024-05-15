@@ -21,6 +21,7 @@ public class Sword : MonoBehaviour
     private float comboAttackTimer = 0f;
     private float magicTimer = 0f;
     private float areaDamageTimer = 0f;
+    private int swordDamage = 0;
 
     void Update()
     {
@@ -35,24 +36,45 @@ public class Sword : MonoBehaviour
     {
         if (basicAttackTimer <= 0)
         {
+            UpdateSwordDamage(basicAttackDamage);
             // Thực hiện chém thường
-            // Ví dụ: Gây sát thương cho mục tiêu
-            Debug.Log("Basic Attack!");
-            
+            Debug.Log("Basic Attack! Damage: " + swordDamage);
+
+            // Gây sát thương cho mục tiêu
+            //DealDamageToTarget();
+
             // Reset hồi chiêu và đặt lại thời gian hồi chiêu
             basicAttackTimer = basicAttackCooldown;
         }
     }
 
+    // Hàm này thực hiện việc gây sát thương cho mục tiêu
+    // private void DealDamageToTarget()
+    // {
+    //     // Giả sử bạn có một đối tượng mục tiêu với script "Target" có phương thức "TakeDamage"
+    //     // Lấy đối tượng mục tiêu (ví dụ từ raycast, collider, etc.)
+    //     Target target = GetTarget(); // Bạn cần thực hiện phương thức GetTarget() để lấy mục tiêu thực tế
+
+    //     if (target != null)
+    //     {
+    //         target.TakeDamage(swordDamage);
+    //     }
+    // }
+
+    // // Giả định phương thức này trả về đối tượng mục tiêu
+    // private Target GetTarget()
+    // {
+    //     // Tìm kiếm đối tượng mục tiêu trong tầm tấn công
+    //     // Điều này có thể dựa trên raycast, collider hoặc bất kỳ phương pháp nào bạn sử dụng để xác định mục tiêu
+    //     return null; // Thay thế bằng logic lấy mục tiêu thực tế
+    // }
+
     public void ComboAttack()
     {
         if (comboAttackTimer <= 0)
         {
-            // Thực hiện liên hoàn chém
-            // Ví dụ: Gây sát thương cho mục tiêu
-            Debug.Log("Combo Attack!");
-            
-            // Reset hồi chiêu và đặt lại thời gian hồi chiêu
+            UpdateSwordDamage(comboAttackDamage);
+            Debug.Log("Combo Attack! Damage: " + comboAttackDamage);
             comboAttackTimer = comboAttackCooldown;
         }
     }
@@ -61,11 +83,8 @@ public class Sword : MonoBehaviour
     {
         if (magicTimer <= 0)
         {
-            // Thực hiện cầu phép
-            // Ví dụ: Gây sát thương cho mục tiêu
-            Debug.Log("Magic!");
-            
-            // Reset hồi chiêu và đặt lại thời gian hồi chiêu
+            UpdateSwordDamage(magicDamage);
+            Debug.Log("Magic! Damage: " + magicDamage);
             magicTimer = magicCooldown;
         }
     }
@@ -74,19 +93,14 @@ public class Sword : MonoBehaviour
     {
         if (areaDamageTimer <= 0)
         {
-            // Thực hiện vùng sát thương
-            // Ví dụ: Gây sát thương cho mục tiêu
-            Debug.Log("Area Damage!");
-            
-            // Reset hồi chiêu và đặt lại thời gian hồi chiêu
+            UpdateSwordDamage(areaDamage);
+            Debug.Log("Area Damage! Damage: " + areaDamage);
             areaDamageTimer = areaDamageCooldown;
         }
     }
-    public void UpdateSwordDamage(int newDamage)
-{
-    // Cập nhật giá trị sát thương của thanh kiếm
-    // Ví dụ: gán giá trị mới cho basicAttackDamage
-    basicAttackDamage = newDamage;
-}
 
+    public void UpdateSwordDamage(int newDamage)
+    {
+        swordDamage = newDamage;
+    }
 }

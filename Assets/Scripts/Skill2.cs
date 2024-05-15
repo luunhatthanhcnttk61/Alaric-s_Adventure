@@ -10,7 +10,7 @@ public class Skill2 : MonoBehaviour
         if (sword != null)
         {
             // Gọi phương thức UpdateSwordDamage trên Sword để cập nhật giá trị sát thương mới
-            sword.UpdateSwordDamage(70); // Tham số là giá trị sát thương mới
+            sword.ComboAttack(); // Tham số là giá trị sát thương mới
         }
     }
 }
