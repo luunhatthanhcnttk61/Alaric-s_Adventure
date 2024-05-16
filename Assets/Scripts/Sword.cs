@@ -22,6 +22,16 @@ public class Sword : MonoBehaviour
     private float magicTimer = 0f;
     private float areaDamageTimer = 0f;
     private int swordDamage = 0;
+    public int currentMana = 300; // Mana hiện tại
+    public int maxMana = 300; // Mana tối đa
+    private float manaRegenTimer = 0f;
+    public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
+
+    public void ReduceMana(int amount)
+    {
+        currentMana -= amount;
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+    }
 
     void Update()
     {
@@ -30,6 +40,18 @@ public class Sword : MonoBehaviour
         comboAttackTimer -= Time.deltaTime;
         magicTimer -= Time.deltaTime;
         areaDamageTimer -= Time.deltaTime;
+         // Hồi mana mỗi giây
+        manaRegenTimer -= Time.deltaTime;
+        if (manaRegenTimer <= 0)
+        {
+            // Kiểm tra xem mana đã đạt đến giá trị tối đa chưa
+            if (currentMana < maxMana)
+            {
+                currentMana += manaRegenRate;
+                currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+            }
+            manaRegenTimer = 1f; // Đặt lại bộ đếm cho việc hồi mana mỗi giây
+        }
     }
 
     public void BasicAttack()

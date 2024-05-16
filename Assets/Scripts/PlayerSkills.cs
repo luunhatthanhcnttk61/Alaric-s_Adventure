@@ -11,15 +11,15 @@ public class PlayerSkills : MonoBehaviour
         {
             sword.BasicAttack();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             sword.ComboAttack();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             sword.Magic();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             sword.AreaDamage();
         }
