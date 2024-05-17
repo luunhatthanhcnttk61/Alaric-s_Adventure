@@ -19,16 +19,16 @@ public class SkillManager : MonoBehaviour
     private bool skill3OnCooldown = false; // Biến để kiểm tra xem kỹ năng 3 có đang trong thời gian hồi chiêu không
     private bool skill4OnCooldown = false; // Biến để kiểm tra xem kỹ năng 4 có đang trong thời gian hồi chiêu không
 
-    private float skill1CooldownTime = 1f; // Thời gian hồi chiêu cho kỹ năng 1
-    private float skill2CooldownTime = 3f; // Thời gian hồi chiêu cho kỹ năng 2
-    private float skill3CooldownTime = 4f; // Thời gian hồi chiêu cho kỹ năng 3
-    private float skill4CooldownTime = 7f; // Thời gian hồi chiêu cho kỹ năng 4
+    private float skill1CooldownTime = 3f; // Thời gian hồi chiêu cho kỹ năng 1
+    private float skill2CooldownTime = 5f; // Thời gian hồi chiêu cho kỹ năng 2
+    private float skill3CooldownTime = 7f; // Thời gian hồi chiêu cho kỹ năng 3
+    private float skill4CooldownTime = 9f; // Thời gian hồi chiêu cho kỹ năng 4
 
     // Thêm các giá trị mana cần thiết cho từng skill
     public float skill1ManaCost = 10f;
-    public float skill2ManaCost = 30f;
-    public float skill3ManaCost = 40f;
-    public float skill4ManaCost = 70f;
+    public float skill2ManaCost = 20f;
+    public float skill3ManaCost = 30f;
+    public float skill4ManaCost = 40f;
 
     void Update()
     {
@@ -125,11 +125,11 @@ public class SkillManager : MonoBehaviour
                 break;
         }
     }
+
     // Hàm được gọi từ script xử lý sự kiện hoàn thành animation
     public void OnAnimationEnd()
     {
         isAnimating = false; // Đặt biến isAnimating thành false khi animation kết thúc
-        playerMovement.SetCanMove(true);
+        playerMovement.SetCanMove(true); // Kích hoạt lại chuyển động
     }
 }
-
