@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Coins
+  - Bot
   layers:
   - Default
   - TransparentFX

@@ -26,9 +26,9 @@ public class SkillManager : MonoBehaviour
 
     // Thêm các giá trị mana cần thiết cho từng skill
     public float skill1ManaCost = 10f;
-    public float skill2ManaCost = 20f;
-    public float skill3ManaCost = 30f;
-    public float skill4ManaCost = 40f;
+    public float skill2ManaCost = 30f;
+    public float skill3ManaCost = 40f;
+    public float skill4ManaCost = 70f;
 
     void Update()
     {
@@ -130,6 +130,8 @@ public class SkillManager : MonoBehaviour
     public void OnAnimationEnd()
     {
         isAnimating = false; // Đặt biến isAnimating thành false khi animation kết thúc
+        Debug.Log("Ket thuc animation");
         playerMovement.SetCanMove(true); // Kích hoạt lại chuyển động
+        Debug.Log("Player co the chuyen dong");
     }
 }

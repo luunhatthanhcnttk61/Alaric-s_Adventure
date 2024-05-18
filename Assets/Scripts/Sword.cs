@@ -27,12 +27,6 @@ public class Sword : MonoBehaviour
     private float manaRegenTimer = 0f;
     public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
 
-    public void ReduceMana(int amount)
-    {
-        currentMana -= amount;
-        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
-    }
-
     void Update()
     {
         // Cập nhật thời gian hồi chiêu cho mỗi kỹ năng
@@ -40,7 +34,8 @@ public class Sword : MonoBehaviour
         comboAttackTimer -= Time.deltaTime;
         magicTimer -= Time.deltaTime;
         areaDamageTimer -= Time.deltaTime;
-         // Hồi mana mỗi giây
+        
+        // Hồi mana mỗi giây
         manaRegenTimer -= Time.deltaTime;
         if (manaRegenTimer <= 0)
         {
@@ -56,67 +51,56 @@ public class Sword : MonoBehaviour
 
     public void BasicAttack()
     {
-        if (basicAttackTimer <= 0)
+        if (basicAttackTimer <= 0 && currentMana >= basicAttackManaCost)
         {
+            ReduceMana(basicAttackManaCost);
             UpdateSwordDamage(basicAttackDamage);
             // Thực hiện chém thường
             Debug.Log("Basic Attack! Damage: " + swordDamage);
 
             // Gây sát thương cho mục tiêu
-            //DealDamageToTarget();
+            DealDamageToTarget(basicAttackDamage);
 
             // Reset hồi chiêu và đặt lại thời gian hồi chiêu
             basicAttackTimer = basicAttackCooldown;
         }
     }
 
-    // Hàm này thực hiện việc gây sát thương cho mục tiêu
-    // private void DealDamageToTarget()
-    // {
-    //     // Giả sử bạn có một đối tượng mục tiêu với script "Target" có phương thức "TakeDamage"
-    //     // Lấy đối tượng mục tiêu (ví dụ từ raycast, collider, etc.)
-    //     Target target = GetTarget(); // Bạn cần thực hiện phương thức GetTarget() để lấy mục tiêu thực tế
-
-    //     if (target != null)
-    //     {
-    //         target.TakeDamage(swordDamage);
-    //     }
-    // }
-
-    // // Giả định phương thức này trả về đối tượng mục tiêu
-    // private Target GetTarget()
-    // {
-    //     // Tìm kiếm đối tượng mục tiêu trong tầm tấn công
-    //     // Điều này có thể dựa trên raycast, collider hoặc bất kỳ phương pháp nào bạn sử dụng để xác định mục tiêu
-    //     return null; // Thay thế bằng logic lấy mục tiêu thực tế
-    // }
-
     public void ComboAttack()
     {
-        if (comboAttackTimer <= 0)
+        if (comboAttackTimer <= 0 && currentMana >= comboAttackManaCost)
         {
+            ReduceMana(comboAttackManaCost);
             UpdateSwordDamage(comboAttackDamage);
             Debug.Log("Combo Attack! Damage: " + comboAttackDamage);
+
+            DealDamageToTarget(comboAttackDamage);
             comboAttackTimer = comboAttackCooldown;
         }
     }
 
     public void Magic()
     {
-        if (magicTimer <= 0)
+        if (magicTimer <= 0 && currentMana >= magicManaCost)
         {
+            ReduceMana(magicManaCost);
             UpdateSwordDamage(magicDamage);
             Debug.Log("Magic! Damage: " + magicDamage);
+
+            DealDamageToTarget(magicDamage);
             magicTimer = magicCooldown;
         }
     }
 
     public void AreaDamage()
     {
-        if (areaDamageTimer <= 0)
+        if (areaDamageTimer <= 0 && currentMana >= areaDamageManaCost)
         {
+            ReduceMana(areaDamageManaCost);
             UpdateSwordDamage(areaDamage);
             Debug.Log("Area Damage! Damage: " + areaDamage);
+
+            DealDamageToTarget(areaDamage);
             areaDamageTimer = areaDamageCooldown;
         }
     }
@@ -124,5 +108,30 @@ public class Sword : MonoBehaviour
     public void UpdateSwordDamage(int newDamage)
     {
         swordDamage = newDamage;
+    }
+
+    private void DealDamageToTarget(int damage)
+    {
+        // Lấy tất cả các collider trong một vùng xung quanh thanh kiếm
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+        foreach (var hitCollider in hitColliders)
+        {
+            // Nếu collider là Bot, gây sát thương
+            if (hitCollider.CompareTag("Bot"))
+            {
+                EnermyAI botHealth = hitCollider.GetComponent<EnermyAI>();
+                if (botHealth != null)
+                {
+                    botHealth.TakeDamage(damage);
+                    Debug.Log("Bot đã bị tấn công!");
+                }
+            }
+        }
+    }
+
+    public void ReduceMana(int amount)
+    {
+        currentMana -= amount;
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
     }
 }
