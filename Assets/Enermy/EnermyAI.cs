@@ -5,40 +5,24 @@ using System.Collections;
 public class EnermyAI : MonoBehaviour
 {
     public Transform player; // Tham chiếu đến Transform của player
-    public float attackRange = 4f; // Phạm vi tấn công
+    public float attackRange = 2f; // Phạm vi tấn công
     public float chaseRange = 10f; // Phạm vi phát hiện player
     public float attackCooldown = 1.5f; // Thời gian hồi chiêu giữa các lần tấn công
-    public int attackDamage = 30; // Sát thương của mỗi đòn tấn công
     public int maxHealth = 300; // Máu tối đa của Enemy Bot
+    public Collider handCollider; // Collider của tay
+    public Collider bodyCollider; // Collider của object enemy
 
     private int currentHealth; // Máu hiện tại của Enemy Bot
     private NavMeshAgent navMeshAgent;
     private Animator animator;
     private bool isAttacking = false;
     private bool isDead = false;
-    private PlayerController2 playerController; // Tham chiếu đến script của player
-    public float attackDistance = 1.5f; // Khoảng cách tấn công mong muốn
-    public Collider attackCollider; // Tham chiếu đến Collider của vũ khí/tay tấn công
-
-    // Phương thức để bật Collider tấn công
-    public void EnableAttackCollider()
-    {
-        attackCollider.enabled = true;
-    }
-
-    // Phương thức để tắt Collider tấn công
-    public void DisableAttackCollider()
-    {
-        attackCollider.enabled = false;
-    }
-
-
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth; // Khởi tạo máu hiện tại bằng máu tối đa
-        playerController = player.GetComponent<PlayerController2>(); // Lấy tham chiếu đến PlayerController2
+        handCollider.enabled = false; // Tắt collider của tay khi bắt đầu
     }
 
     void Update()
@@ -56,17 +40,7 @@ public class EnermyAI : MonoBehaviour
         }
         else if (distanceToPlayer <= chaseRange)
         {
-            // Điều chỉnh khoảng cách giữa bot và người chơi
-            if (distanceToPlayer > attackDistance)
-            {
-                navMeshAgent.SetDestination(player.position);
-            }
-            else
-            {
-                // Đứng yên nếu đã ở gần người chơi
-                navMeshAgent.SetDestination(transform.position);
-            }
-
+            navMeshAgent.SetDestination(player.position);
             animator.SetBool("isWalking", true); // Chuyển sang animation chạy
         }
         else
@@ -77,24 +51,22 @@ public class EnermyAI : MonoBehaviour
         }
     }
 
-
     IEnumerator AttackPlayer()
     {
         isAttacking = true;
         navMeshAgent.isStopped = true; // Dừng di chuyển khi tấn công
         animator.SetTrigger("Attack"); // Kích hoạt animation tấn công
 
-        // Đợi đến khi animation tấn công chạm mục tiêu (có thể dùng animation event)
-        yield return new WaitForSeconds(0.5f);
+        // Bật collider của tay khi bắt đầu tấn công
+        handCollider.enabled = true;
 
-        // Gây sát thương cho player
-        if (playerController != null)
-        {
-            playerController.TakeDamage(attackDamage);
-            Debug.Log("Attacking player!");
-        }
+        // Gọi phương thức tấn công (implement animation và logic tấn công ở đây)
+        Debug.Log("Attacking player!");
 
-        yield return new WaitForSeconds(attackCooldown - 0.5f); // Thời gian hồi chiêu trừ đi thời gian chờ trước đó
+        yield return new WaitForSeconds(attackCooldown);
+
+        // Tắt collider của tay sau khi tấn công
+        handCollider.enabled = false;
 
         navMeshAgent.isStopped = false; // Tiếp tục di chuyển sau khi tấn công
         isAttacking = false;
@@ -119,6 +91,7 @@ public class EnermyAI : MonoBehaviour
         isDead = true;
         navMeshAgent.isStopped = true; // Dừng di chuyển khi chết
         animator.SetTrigger("Die"); // Kích hoạt animation chết
+        // Thực hiện các hành động khác khi enemy chết (ví dụ: hủy enemy sau một thời gian)
         Destroy(gameObject, 2f); // Hủy enemy sau 2 giây
     }
 }

@@ -2980,13 +2980,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1285046509}
-  attackRange: 4
+  attackRange: 2
   chaseRange: 10
   attackCooldown: 1.5
-  attackDamage: 30
   maxHealth: 300
-  attackDistance: 1.5
-  attackCollider: {fileID: 2108077260}
+  handCollider: {fileID: 2108077260}
+  bodyCollider: {fileID: 1146050497}
 --- !u!54 &1146050499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3028,6 +3027,7 @@ GameObject:
   - component: {fileID: 1285046515}
   - component: {fileID: 1285046514}
   - component: {fileID: 1285046516}
+  - component: {fileID: 1285046517}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -3129,7 +3129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   jumpForce: 7
-  controller: {fileID: 0}
+  controller: {fileID: 1285046511}
   gravityScale: 1
   anim: {fileID: 751593796}
   pivot: {fileID: 1104887220}
@@ -3230,6 +3230,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1285046517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285046505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 175f77e923e7b234eb198e38594909c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  thePlayer: {fileID: 1285046510}
 --- !u!1 &1324134322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3614,7 +3629,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405411897}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 175f77e923e7b234eb198e38594909c7, type: 3}
   m_Name: 
@@ -5238,8 +5253,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.24, y: 0.34, z: -0.1}
-  m_Center: {x: 0, y: 0.16, z: 0}
+  m_Size: {x: 0.21924847, y: 0.42060775, z: 0.14254057}
+  m_Center: {x: -0.006661596, y: 0.12678625, z: 0.021270642}
 --- !u!1 &2115979654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 225252226663976541, guid: 1e788e7dc44a60244a5d3c9e4ac7c060,

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthManager : MonoBehaviour
@@ -8,27 +6,26 @@ public class HealthManager : MonoBehaviour
     public int currentHealth;
 
     public PlayerController2 thePlayer;
-    // Start is called before the first frame update
+
     void Start()
-    {   
-        currentHealth = maxHealth; 
+    {
+        currentHealth = maxHealth;
         thePlayer = FindObjectOfType<PlayerController2>();
-        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void HurtPlayer(int damage, Vector3 direction)
     {
         currentHealth -= damage;
-        thePlayer.KnockBack(direction);
+        thePlayer.TakeDamage(damage, direction);
+        if (currentHealth <= 0)
+        {
+            // Handle player death here
+        }
     }
-    public void HealPlayer(int healMount)
+
+    public void HealPlayer(int healAmount)
     {
-        currentHealth += healMount;
+        currentHealth += healAmount;
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
