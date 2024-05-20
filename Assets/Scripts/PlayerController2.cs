@@ -155,6 +155,26 @@ public class PlayerController2 : MonoBehaviour
         canMove = false;
         anim.SetTrigger("Die");
         Debug.Log("Player has died!");
+
+        // Tắt tất cả các Collider của Player
+        Collider[] colliders = GetComponents<Collider>();
+        foreach (Collider col in colliders)
+        {
+            col.enabled = false;
+        }
+
+        // Tắt CharacterController
+        if (controller != null)
+        {
+            controller.enabled = false;
+        }
+
+        // Ngừng pivot rotation
+        pivot.gameObject.SetActive(false);
+
+        // Vô hiệu hóa script này
+        this.enabled = false;
+
         // Thực hiện các hành động khi player chết (ví dụ: hiển thị màn hình game over)
     }
 }

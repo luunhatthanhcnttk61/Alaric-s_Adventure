@@ -35,12 +35,15 @@ public class CollectItem : MonoBehaviour
             if (gameManager == null) return;
 
             // Thêm coins và health items vào player
-            gameManager.AddCoins(coinValue);
-            Instantiate(collectEffect, transform.position, transform.rotation);
-            gameManager.AddHealthItem(healthValue);
-            Instantiate(collectEffect, transform.position, transform.rotation);
-            
-            // Hủy gameobject này
-            Destroy(gameObject);    
+            if(other.tag == "Player"){
+                gameManager.AddCoins(coinValue);
+                Instantiate(collectEffect, transform.position, transform.rotation);
+                gameManager.AddHealthItem(healthValue);
+                Instantiate(collectEffect, transform.position, transform.rotation);
+                
+                // Hủy gameobject này
+                Destroy(gameObject); 
+            }
+               
     }
 }
