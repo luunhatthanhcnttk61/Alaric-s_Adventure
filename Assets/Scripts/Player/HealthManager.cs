@@ -16,10 +16,10 @@ public class HealthManager : MonoBehaviour
     public void HurtPlayer(int damage, Vector3 direction)
     {
         currentHealth -= damage;
-        thePlayer.TakeDamage(damage, direction);
+        thePlayer.TakeDamage(damage, direction);    
         if (currentHealth <= 0)
         {
-            // Handle player death here
+            
         }
     }
 

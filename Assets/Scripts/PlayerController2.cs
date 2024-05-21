@@ -144,7 +144,7 @@ public class PlayerController2 : MonoBehaviour
         anim.SetTrigger("TakeDamage");
 
         // Thời gian chờ cho animation nhận sát thương (điều chỉnh thời gian này để phù hợp với animation của bạn)
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         // Cho phép di chuyển lại
         SetCanMove(true);
@@ -175,6 +175,6 @@ public class PlayerController2 : MonoBehaviour
         // Vô hiệu hóa script này
         this.enabled = false;
 
-        // Thực hiện các hành động khi player chết (ví dụ: hiển thị màn hình game over)
+        // Thực hiện các hành động khi player chết (hiển thị màn hình game over)
     }
 }

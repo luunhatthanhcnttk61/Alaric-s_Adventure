@@ -27,6 +27,8 @@
 //     private float manaRegenTimer = 0f;
 //     public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
 
+//     private string currentSkill = ""; // Biến để theo dõi skill hiện tại
+
 //     void Update()
 //     {
 //         // Cập nhật thời gian hồi chiêu cho mỗi kỹ năng
@@ -34,7 +36,7 @@
 //         comboAttackTimer -= Time.deltaTime;
 //         magicTimer -= Time.deltaTime;
 //         areaDamageTimer -= Time.deltaTime;
-        
+
 //         // Hồi mana mỗi giây
 //         manaRegenTimer -= Time.deltaTime;
 //         if (manaRegenTimer <= 0)
@@ -55,11 +57,8 @@
 //         {
 //             ReduceMana(basicAttackManaCost);
 //             UpdateSwordDamage(basicAttackDamage);
-//             // Thực hiện chém thường
+//             currentSkill = "BasicAttack";
 //             Debug.Log("Basic Attack! Damage: " + swordDamage);
-
-//             // Gây sát thương cho mục tiêu
-//             DealDamageToTarget(basicAttackDamage);
 
 //             // Reset hồi chiêu và đặt lại thời gian hồi chiêu
 //             basicAttackTimer = basicAttackCooldown;
@@ -72,9 +71,9 @@
 //         {
 //             ReduceMana(comboAttackManaCost);
 //             UpdateSwordDamage(comboAttackDamage);
+//             currentSkill = "ComboAttack";
 //             Debug.Log("Combo Attack! Damage: " + comboAttackDamage);
 
-//             DealDamageToTarget(comboAttackDamage);
 //             comboAttackTimer = comboAttackCooldown;
 //         }
 //     }
@@ -85,9 +84,9 @@
 //         {
 //             ReduceMana(magicManaCost);
 //             UpdateSwordDamage(magicDamage);
+//             currentSkill = "Magic";
 //             Debug.Log("Magic! Damage: " + magicDamage);
 
-//             DealDamageToTarget(magicDamage);
 //             magicTimer = magicCooldown;
 //         }
 //     }
@@ -98,9 +97,9 @@
 //         {
 //             ReduceMana(areaDamageManaCost);
 //             UpdateSwordDamage(areaDamage);
+//             currentSkill = "AreaDamage";
 //             Debug.Log("Area Damage! Damage: " + areaDamage);
 
-//             DealDamageToTarget(areaDamage);
 //             areaDamageTimer = areaDamageCooldown;
 //         }
 //     }
@@ -123,7 +122,7 @@
 //                 if (botHealth != null)
 //                 {
 //                     botHealth.TakeDamage(damage);
-//                     Debug.Log("Bot da bi tan cong!");
+//                     Debug.Log("Bot đã bị tấn công!");
 //                 }
 //             }
 //         }
@@ -134,8 +133,40 @@
 //         currentMana -= amount;
 //         currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
 //     }
+
+//     void OnTriggerEnter(Collider other)
+//     {
+//         if (other.CompareTag("Bot")) // Kiểm tra nếu va chạm với bot
+//         {
+//             EnermyAI enermy = other.GetComponent<EnermyAI>();
+//             if (enermy != null)
+//             {
+//                 int damage = 0;
+
+//                 switch (currentSkill)
+//                 {
+//                     case "BasicAttack":
+//                         damage = basicAttackDamage;
+//                         break;
+//                     case "ComboAttack":
+//                         damage = comboAttackDamage;
+//                         break;
+//                     case "Magic":
+//                         damage = magicDamage;
+//                         break;
+//                     case "AreaDamage":
+//                         damage = areaDamage;
+//                         break;
+//                 }
+
+//                 enermy.TakeDamage(damage); // Gây damage cho bot
+//                 Debug.Log($"{currentSkill} hit! Damage: {damage}");
+//             }
+//         }
+//     }
 // }
 using UnityEngine;
+using System.Collections; // Thêm dòng này để sử dụng IEnumerator
 
 public class Sword : MonoBehaviour
 {
@@ -164,7 +195,12 @@ public class Sword : MonoBehaviour
     private float manaRegenTimer = 0f;
     public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
 
-    private string currentSkill = ""; // Biến để theo dõi skill hiện tại
+    public Collider swordCollider; // Thêm tham chiếu đến Collider của sword
+
+    void Start()
+    {
+        swordCollider.enabled = false; // Đảm bảo sword collider bị tắt khi bắt đầu
+    }
 
     void Update()
     {
@@ -173,7 +209,7 @@ public class Sword : MonoBehaviour
         comboAttackTimer -= Time.deltaTime;
         magicTimer -= Time.deltaTime;
         areaDamageTimer -= Time.deltaTime;
-
+        
         // Hồi mana mỗi giây
         manaRegenTimer -= Time.deltaTime;
         if (manaRegenTimer <= 0)
@@ -194,8 +230,13 @@ public class Sword : MonoBehaviour
         {
             ReduceMana(basicAttackManaCost);
             UpdateSwordDamage(basicAttackDamage);
-            currentSkill = "BasicAttack";
+            // Thực hiện chém thường
             Debug.Log("Basic Attack! Damage: " + swordDamage);
+            
+            StartCoroutine(EnableSwordColliderTemporarily(1f));
+
+            // Gây sát thương cho mục tiêu
+            DealDamageToTarget(basicAttackDamage);
 
             // Reset hồi chiêu và đặt lại thời gian hồi chiêu
             basicAttackTimer = basicAttackCooldown;
@@ -208,9 +249,11 @@ public class Sword : MonoBehaviour
         {
             ReduceMana(comboAttackManaCost);
             UpdateSwordDamage(comboAttackDamage);
-            currentSkill = "ComboAttack";
             Debug.Log("Combo Attack! Damage: " + comboAttackDamage);
 
+            StartCoroutine(EnableSwordColliderTemporarily(2.5f));
+
+            DealDamageToTarget(comboAttackDamage);
             comboAttackTimer = comboAttackCooldown;
         }
     }
@@ -221,9 +264,11 @@ public class Sword : MonoBehaviour
         {
             ReduceMana(magicManaCost);
             UpdateSwordDamage(magicDamage);
-            currentSkill = "Magic";
             Debug.Log("Magic! Damage: " + magicDamage);
 
+            StartCoroutine(EnableSwordColliderTemporarily(1f));
+
+            DealDamageToTarget(magicDamage);
             magicTimer = magicCooldown;
         }
     }
@@ -234,9 +279,11 @@ public class Sword : MonoBehaviour
         {
             ReduceMana(areaDamageManaCost);
             UpdateSwordDamage(areaDamage);
-            currentSkill = "AreaDamage";
             Debug.Log("Area Damage! Damage: " + areaDamage);
 
+            StartCoroutine(EnableSwordColliderTemporarily(3f));
+
+            DealDamageToTarget(areaDamage);
             areaDamageTimer = areaDamageCooldown;
         }
     }
@@ -259,7 +306,7 @@ public class Sword : MonoBehaviour
                 if (botHealth != null)
                 {
                     botHealth.TakeDamage(damage);
-                    Debug.Log("Bot đã bị tấn công!");
+                    Debug.Log("Bot da bi tan cong!");
                 }
             }
         }
@@ -271,34 +318,10 @@ public class Sword : MonoBehaviour
         currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
     }
 
-    void OnTriggerEnter(Collider other)
+    private IEnumerator EnableSwordColliderTemporarily(float time)
     {
-        if (other.CompareTag("Enermy")) // Kiểm tra nếu va chạm với bot
-        {
-            EnermyAI enermy = other.GetComponent<EnermyAI>();
-            if (enermy != null)
-            {
-                int damage = 0;
-
-                switch (currentSkill)
-                {
-                    case "BasicAttack":
-                        damage = basicAttackDamage;
-                        break;
-                    case "ComboAttack":
-                        damage = comboAttackDamage;
-                        break;
-                    case "Magic":
-                        damage = magicDamage;
-                        break;
-                    case "AreaDamage":
-                        damage = areaDamage;
-                        break;
-                }
-
-                enermy.TakeDamage(damage); // Gây damage cho bot
-                Debug.Log($"{currentSkill} hit! Damage: {damage}");
-            }
-        }
+        swordCollider.enabled = true; // Bật collider của sword
+        yield return new WaitForSeconds(time); // Thời gian chờ (điều chỉnh thời gian này để phù hợp với thời gian của skill)
+        swordCollider.enabled = false; // Tắt collider của sword
     }
 }
