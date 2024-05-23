@@ -2997,7 +2997,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146050493}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.9931643, y: 2.0184557, z: 0.5904999}
@@ -3139,6 +3139,7 @@ MonoBehaviour:
   knockBackTime: 0.25
   maxHealth: 300
   maxMana: 300
+  currentMana: 0
   manaRegenRate: 5
 --- !u!143 &1285046511
 CharacterController:
@@ -3245,6 +3246,8 @@ MonoBehaviour:
   maxHealth: 300
   currentHealth: 300
   thePlayer: {fileID: 1285046510}
+  healthRegenRate: 2
+  timeToRegen: 2
 --- !u!1 &1324134322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3638,6 +3641,8 @@ MonoBehaviour:
   maxHealth: 10
   currentHealth: 10
   thePlayer: {fileID: 1285046510}
+  healthRegenRate: 2
+  timeToRegen: 2
 --- !u!1 &1570965013 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 225252226663976541, guid: 1e788e7dc44a60244a5d3c9e4ac7c060,

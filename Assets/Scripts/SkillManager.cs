@@ -35,6 +35,7 @@ public class SkillManager : MonoBehaviour
         // Kiểm tra input từ người chơi và kích hoạt animation của skill 1 khi nhấn phím 1
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isAnimating && !skill1OnCooldown)
         {
+            Debug.Log("Da nhan phim 1");
             if (playerMovement.UseMana(skill1ManaCost))
             {
                 playerAnimator.SetTrigger("Skill1");

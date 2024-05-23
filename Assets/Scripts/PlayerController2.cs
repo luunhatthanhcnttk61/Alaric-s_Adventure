@@ -27,7 +27,7 @@ public class PlayerController2 : MonoBehaviour
 
     // Thêm thuộc tính mana
     public float maxMana = 300f;
-    private float currentMana;
+    public float currentMana;
     private float manaRegenTimer = 0f;
     public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
 
