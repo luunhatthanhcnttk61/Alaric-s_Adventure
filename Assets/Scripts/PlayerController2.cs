@@ -23,7 +23,7 @@ public class PlayerController2 : MonoBehaviour
 
     // Thuộc tính sức khỏe
     public int maxHealth = 300;
-    private int currentHealth;
+    public int currentHealth;
 
     // Thêm thuộc tính mana
     public float maxMana = 300f;
