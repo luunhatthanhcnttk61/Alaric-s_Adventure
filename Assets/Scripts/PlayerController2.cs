@@ -124,6 +124,8 @@ public class PlayerController2 : MonoBehaviour
     public void TakeDamage(int damage, Vector3 direction)
     {
         currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        FindObjectOfType<PlayerUIManager>().UpdateHealthBar();
         anim.SetTrigger("TakeDamage");
 
         if (currentHealth <= 0)

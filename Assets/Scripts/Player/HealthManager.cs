@@ -1,44 +1,8 @@
-// using UnityEngine;
-
-// public class HealthManager : MonoBehaviour
-// {
-//     public int maxHealth;
-//     public int currentHealth;
-
-//     public PlayerController2 thePlayer;
-
-//     void Start()
-//     {
-//         currentHealth = maxHealth;
-//         thePlayer = FindObjectOfType<PlayerController2>();
-//     }
-
-//     public void HurtPlayer(int damage, Vector3 direction)
-//     {
-//         currentHealth -= damage;
-//         thePlayer.TakeDamage(damage, direction);    
-//         if (currentHealth <= 0)
-//         {
-            
-//         }
-//     }
-
-//     public void HealPlayer(int healAmount)
-//     {
-//         currentHealth += healAmount;
-//         if (currentHealth > maxHealth)
-//         {
-//             currentHealth = maxHealth;
-//         }
-//     }
-// }
 using UnityEngine;
 using System.Collections;
 
 public class HealthManager : MonoBehaviour
 {
-    public int maxHealth;
-    public int currentHealth;
     public PlayerController2 thePlayer;
     public int healthRegenRate = 2; // Tốc độ hồi máu mỗi giây
     public float timeToRegen = 2f; // Thời gian chờ để bắt đầu hồi máu
@@ -47,7 +11,6 @@ public class HealthManager : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
         thePlayer = FindObjectOfType<PlayerController2>();
         lastDamageTime = Time.time; // Khởi tạo thời gian cuối cùng nhận sát thương
         StartCoroutine(RegenHealth()); // Bắt đầu Coroutine hồi máu
@@ -55,10 +18,10 @@ public class HealthManager : MonoBehaviour
 
     public void HurtPlayer(int damage, Vector3 direction)
     {
-        currentHealth -= damage;
+        thePlayer.currentHealth -= damage;
         lastDamageTime = Time.time; // Cập nhật thời gian nhận sát thương
         thePlayer.TakeDamage(damage, direction);
-        if (currentHealth <= 0)
+        if (thePlayer.currentHealth <= 0)
         {
             // Xử lý khi máu bằng 0 (ví dụ: game over)
         }
@@ -66,10 +29,16 @@ public class HealthManager : MonoBehaviour
 
     public void HealPlayer(int healAmount)
     {
-        currentHealth += healAmount;
-        if (currentHealth > maxHealth)
+        if(thePlayer.currentHealth > 0)
         {
-            currentHealth = maxHealth;
+            thePlayer.currentHealth += healAmount;
+            thePlayer.currentHealth = Mathf.Clamp(thePlayer.currentHealth, 0, thePlayer.maxHealth);
+            FindObjectOfType<PlayerUIManager>().UpdateHealthBar();
+            if (thePlayer.currentHealth > thePlayer.maxHealth)
+            {
+                thePlayer.currentHealth = thePlayer.maxHealth;
+                FindObjectOfType<PlayerUIManager>().UpdateHealthBar();
+            }
         }
     }
 
@@ -79,10 +48,10 @@ public class HealthManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1f); // Kiểm tra mỗi giây
 
-            if (Time.time - lastDamageTime >= timeToRegen && currentHealth < maxHealth)
+            if (Time.time - lastDamageTime >= timeToRegen && thePlayer.currentHealth < thePlayer.maxHealth)
             {
                 HealPlayer(healthRegenRate); // Hồi máu nếu không nhận sát thương trong vòng 2 giây
-                Debug.Log($"Player healed by {healthRegenRate}. Current health: {currentHealth}");
+                Debug.Log($"Player healed by {healthRegenRate}. Current health: {thePlayer.currentHealth}");
             }
         }
     }

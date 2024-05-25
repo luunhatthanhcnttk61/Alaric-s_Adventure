@@ -30,13 +30,14 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void UpdateHealthBar()
     {
         // Cập nhật thanh máu và mana dựa trên trạng thái của player
         if (player != null)
         {
             healthBarFill.fillAmount = (float)player.currentHealth / player.maxHealth;
             manaBarFill.fillAmount = (float)player.currentMana / player.maxMana;
+            Debug.Log(player.currentHealth + "/" + player.maxHealth);
         }
     }
 }
