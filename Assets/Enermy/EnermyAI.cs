@@ -122,7 +122,6 @@ public class EnermyAI : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
-        Debug.Log("Bot bị trừ máu");
         animator.SetTrigger("TakeDamage"); // Kích hoạt animation nhận sát thương
 
         if (currentHealth <= 0)
@@ -135,9 +134,11 @@ public class EnermyAI : MonoBehaviour
     {
         isDead = true;
         navMeshAgent.isStopped = true; // Dừng di chuyển khi chết
+        Debug.Log("Animation die of bot");
         animator.SetTrigger("Die"); // Kích hoạt animation chết
+        Debug.Log("Da kich hoat animation die");
         // Thực hiện các hành động khác khi enemy chết (hủy enemy sau một thời gian)
-        Destroy(gameObject, 2f); // Hủy enemy sau 2 giây
+        Destroy(gameObject, 4f); // Hủy enemy sau 2 giây
     }
 
     public void EnableAttack()

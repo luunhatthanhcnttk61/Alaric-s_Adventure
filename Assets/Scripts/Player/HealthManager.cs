@@ -48,10 +48,9 @@ public class HealthManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1f); // Kiểm tra mỗi giây
 
-            if (Time.time - lastDamageTime >= timeToRegen && thePlayer.currentHealth < thePlayer.maxHealth)
+            if (Time.time - lastDamageTime >= timeToRegen && thePlayer.currentHealth < thePlayer.maxHealth && thePlayer.currentHealth > 0)
             {
-                HealPlayer(healthRegenRate); // Hồi máu nếu không nhận sát thương trong vòng 2 giây
-                Debug.Log($"Player healed by {healthRegenRate}. Current health: {thePlayer.currentHealth}");
+                HealPlayer(healthRegenRate);
             }
         }
     }

@@ -69,7 +69,7 @@ public class Sword : MonoBehaviour
             StartCoroutine(EnableSwordColliderTemporarily(1f));
 
             // Gây sát thương cho mục tiêu
-            DealDamageToTarget(basicAttackDamage);
+            //DealDamageToTarget(basicAttackDamage);
 
             // Reset hồi chiêu và đặt lại thời gian hồi chiêu
             basicAttackTimer = basicAttackCooldown;
@@ -86,7 +86,7 @@ public class Sword : MonoBehaviour
 
             StartCoroutine(EnableSwordColliderTemporarily(2.5f));
 
-            DealDamageToTarget(comboAttackDamage);
+            //DealDamageToTarget(comboAttackDamage);
             comboAttackTimer = comboAttackCooldown;
         }
     }
@@ -101,7 +101,7 @@ public class Sword : MonoBehaviour
 
             StartCoroutine(EnableSwordColliderTemporarily(1f));
 
-            DealDamageToTarget(magicDamage);
+            //DealDamageToTarget(magicDamage);
             magicTimer = magicCooldown;
         }
     }
@@ -116,7 +116,7 @@ public class Sword : MonoBehaviour
 
             StartCoroutine(EnableSwordColliderTemporarily(3f));
 
-            DealDamageToTarget(areaDamage);
+            //DealDamageToTarget(areaDamage);
             areaDamageTimer = areaDamageCooldown;
         }
     }
@@ -126,21 +126,34 @@ public class Sword : MonoBehaviour
         swordDamage = newDamage;
     }
 
-    private void DealDamageToTarget(int damage)
+    // private void DealDamageToTarget(int damage)
+    // {
+    //     // Lấy tất cả các collider trong một vùng xung quanh thanh kiếm
+    //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
+    //     foreach (var hitCollider in hitColliders)
+    //     {
+    //         // Nếu collider là Bot, gây sát thương
+    //         if (hitCollider.CompareTag("Bot"))
+    //         {
+    //             EnermyAI botHealth = hitCollider.GetComponent<EnermyAI>();
+    //             if (botHealth != null)
+    //             {
+    //                 botHealth.TakeDamage(damage);
+    //                 Debug.Log("Bot da bi tan cong!");
+    //             }
+    //         }
+    //     }
+    // }
+
+    private void OnTriggerEnter(Collider other)
     {
-        // Lấy tất cả các collider trong một vùng xung quanh thanh kiếm
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
-        foreach (var hitCollider in hitColliders)
+        if (other.CompareTag("Bot"))
         {
-            // Nếu collider là Bot, gây sát thương
-            if (hitCollider.CompareTag("Bot"))
+            EnermyAI botHealth = other.GetComponent<EnermyAI>();
+            if (botHealth != null)
             {
-                EnermyAI botHealth = hitCollider.GetComponent<EnermyAI>();
-                if (botHealth != null)
-                {
-                    botHealth.TakeDamage(damage);
-                    Debug.Log("Bot da bi tan cong!");
-                }
+                botHealth.TakeDamage(swordDamage);
+                Debug.Log("Bot da bi tan cong!");
             }
         }
     }
