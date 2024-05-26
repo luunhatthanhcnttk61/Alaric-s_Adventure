@@ -40,4 +40,9 @@ public class PlayerUIManager : MonoBehaviour
             Debug.Log(player.currentHealth + "/" + player.maxHealth);
         }
     }
+    public void SetColor(Color color)
+    {
+        healthBarFill.color = color;
+        manaBarFill.color = color;
+    }
 }

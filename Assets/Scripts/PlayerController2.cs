@@ -86,9 +86,11 @@ public class PlayerController2 : MonoBehaviour
             {
                 currentMana += manaRegenRate;
                 currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+                FindObjectOfType<ManaBarManager>().UpdateMana();
             }
             manaRegenTimer = 1f; // Đặt lại bộ đếm cho việc hồi mana mỗi giây
         }
+        FindObjectOfType<ManaBarManager>().UpdateMana();
     }
 
     public void KnockBack(Vector3 direction)
@@ -125,7 +127,7 @@ public class PlayerController2 : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        FindObjectOfType<PlayerUIManager>().UpdateHealthBar();
+        FindObjectOfType<HealthBarManager>().UpdateHealth();
         anim.SetTrigger("TakeDamage");
 
         if (currentHealth <= 0)

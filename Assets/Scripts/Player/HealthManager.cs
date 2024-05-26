@@ -33,11 +33,11 @@ public class HealthManager : MonoBehaviour
         {
             thePlayer.currentHealth += healAmount;
             thePlayer.currentHealth = Mathf.Clamp(thePlayer.currentHealth, 0, thePlayer.maxHealth);
-            FindObjectOfType<PlayerUIManager>().UpdateHealthBar();
+            FindObjectOfType<HealthBarManager>().UpdateHealth();
             if (thePlayer.currentHealth > thePlayer.maxHealth)
             {
                 thePlayer.currentHealth = thePlayer.maxHealth;
-                FindObjectOfType<PlayerUIManager>().UpdateHealthBar();
+                FindObjectOfType<HealthBarManager>().UpdateHealth();
             }
         }
     }
