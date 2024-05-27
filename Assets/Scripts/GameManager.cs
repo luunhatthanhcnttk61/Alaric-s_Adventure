@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int healthItems = 0;
     public int coins = 0;
     public Text coinsText;
+    public PlayerController2 player;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,10 @@ public class GameManager : MonoBehaviour
     public void AddHealthItem(int healthToAdd)
     {
         healthItems += healthToAdd;
+        if(player.currentHealth < player.maxHealth && player.currentHealth > 0)
+        {
+            player.currentHealth += healthItems;
+        }
     }
 
     public void AddCoins(int value)

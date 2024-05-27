@@ -125,9 +125,11 @@ public class EnermyAI : MonoBehaviour
             currentHealth -= damage;
             animator.SetTrigger("TakeDamage"); // Kích hoạt animation nhận sát thương
         }
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
+                   
+            Destroy(gameObject, 4f); 
         }
 
     }
@@ -138,8 +140,6 @@ public class EnermyAI : MonoBehaviour
         Debug.Log("Animation die of bot");
         animator.SetTrigger("Die"); // Kích hoạt animation chết
         Debug.Log("Da kich hoat animation die");
-        
-        Destroy(gameObject, 4f); 
     }
 
     public void EnableAttack()

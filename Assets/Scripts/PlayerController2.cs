@@ -137,7 +137,7 @@ public class PlayerController2 : MonoBehaviour
         else
         {
             StartCoroutine(TakeDamageRoutine());
-            KnockBack(direction);
+            //KnockBack(direction);
         }
     }
 
