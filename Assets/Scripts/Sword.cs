@@ -126,24 +126,6 @@ public class Sword : MonoBehaviour
         swordDamage = newDamage;
     }
 
-    // private void DealDamageToTarget(int damage)
-    // {
-    //     // Lấy tất cả các collider trong một vùng xung quanh thanh kiếm
-    //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1f);
-    //     foreach (var hitCollider in hitColliders)
-    //     {
-    //         // Nếu collider là Bot, gây sát thương
-    //         if (hitCollider.CompareTag("Bot"))
-    //         {
-    //             EnermyAI botHealth = hitCollider.GetComponent<EnermyAI>();
-    //             if (botHealth != null)
-    //             {
-    //                 botHealth.TakeDamage(damage);
-    //                 Debug.Log("Bot da bi tan cong!");
-    //             }
-    //         }
-    //     }
-    // }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -153,7 +135,6 @@ public class Sword : MonoBehaviour
             if (botHealth != null)
             {
                 botHealth.TakeDamage(swordDamage);
-                Debug.Log("Bot da bi tan cong!");
             }
         }
     }

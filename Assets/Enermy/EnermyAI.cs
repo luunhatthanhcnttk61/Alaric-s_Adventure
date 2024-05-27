@@ -45,7 +45,8 @@ public class EnermyAI : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return;
+        if (isDead) 
+            Die();
 
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
@@ -119,26 +120,26 @@ public class EnermyAI : MonoBehaviour
     // Hàm để nhận sát thương từ player
     public void TakeDamage(int damage)
     {
-        if (isDead) return;
-
-        currentHealth -= damage;
-        animator.SetTrigger("TakeDamage"); // Kích hoạt animation nhận sát thương
-
-        if (currentHealth <= 0)
+        if(currentHealth > 0 && currentHealth <= maxHealth)
+        {
+            currentHealth -= damage;
+            animator.SetTrigger("TakeDamage"); // Kích hoạt animation nhận sát thương
+        }
+        if (currentHealth < 0)
         {
             Die();
         }
+
     }
 
-    void Die()
+    public void Die()
     {
-        isDead = true;
         navMeshAgent.isStopped = true; // Dừng di chuyển khi chết
         Debug.Log("Animation die of bot");
         animator.SetTrigger("Die"); // Kích hoạt animation chết
         Debug.Log("Da kich hoat animation die");
-        // Thực hiện các hành động khác khi enemy chết (hủy enemy sau một thời gian)
-        Destroy(gameObject, 4f); // Hủy enemy sau 2 giây
+        
+        Destroy(gameObject, 4f); 
     }
 
     public void EnableAttack()
@@ -153,7 +154,6 @@ public class EnermyAI : MonoBehaviour
         handCollider.enabled = false;
     }
 
-    // Hàm chọn điểm lang thang mới
     void SetNewWanderTarget()
     {
         Vector3 randomDirection = Random.insideUnitSphere * wanderRange;
@@ -163,13 +163,12 @@ public class EnermyAI : MonoBehaviour
         wanderTarget = navHit.position;
     }
 
-    // Hàm lang thang
     void Wander()
     {
-        navMeshAgent.speed = wanderSpeed; // Đặt tốc độ di chuyển khi lang thang
+        navMeshAgent.speed = wanderSpeed;
         if (wanderTimerCounter <= 0)
         {
-            SetNewWanderTarget(); // Chọn điểm lang thang mới sau khi hết thời gian
+            SetNewWanderTarget();
             wanderTimerCounter = wanderTimer;
         }
         else
@@ -178,24 +177,22 @@ public class EnermyAI : MonoBehaviour
         }
 
         navMeshAgent.SetDestination(wanderTarget);
-        animator.SetBool("isWalking", true); // Chuyển sang animation đi lang thang
+        animator.SetBool("isWalking", true);
 
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            SetNewWanderTarget(); // Chọn điểm lang thang mới nếu đã đến nơi
+            SetNewWanderTarget(); 
         }
     }
 
-    // Hàm đuổi theo player
     void ChasePlayer()
     {
-        navMeshAgent.speed = chaseSpeed; // Đặt tốc độ di chuyển khi đuổi theo người chơi
+        navMeshAgent.speed = chaseSpeed; 
         navMeshAgent.SetDestination(player.position);
-        animator.SetBool("isWalking", true); // Chuyển sang animation chạy
-        SmoothLookAt(player); // Quay mượt mà hướng về player khi đuổi theo
+        animator.SetBool("isWalking", true); 
+        SmoothLookAt(player); 
     }
 
-    // Hàm quay mượt mà
     void SmoothLookAt(Transform target)
     {
         Vector3 direction = (target.position - transform.position).normalized;
