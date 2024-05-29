@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUIManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class InventoryUIManager : MonoBehaviour
     public GameObject inventorySlotPrefab; // Prefab của slot trong kho
 
     private List<InventorySlot> inventorySlots = new List<InventorySlot>();
+
+    public Text inventoryFullMessage;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class InventoryUIManager : MonoBehaviour
     {
         // Ẩn kho đồ khi bắt đầu
         inventoryUI.SetActive(false);
+        inventoryFullMessage.gameObject.SetActive(false);
     }
 
     void Update()
@@ -49,13 +53,21 @@ public class InventoryUIManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        GameObject slotObject = Instantiate(inventorySlotPrefab, inventorySlotParent);
-        InventorySlot slot = slotObject.GetComponent<InventorySlot>();
-        if (slot != null)
+        if(inventorySlots.Count <=20)
         {
-            slot.SetItem(item);
-            inventorySlots.Add(slot); 
+            GameObject slotObject = Instantiate(inventorySlotPrefab, inventorySlotParent);
+            InventorySlot slot = slotObject.GetComponent<InventorySlot>();
+            if (slot != null)
+            {
+                slot.SetItem(item);
+                inventorySlots.Add(slot); 
+            }
         }
+        else
+        {
+            inventoryFullMessage.gameObject.SetActive(true);
+        }
+        
     }
 
     public void RemoveItem(Item item)
