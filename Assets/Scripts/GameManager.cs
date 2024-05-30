@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     public int coins = 0;
     public Text coinsText;
     public PlayerController2 player;
-    public InventoryUIManager inventoryUIManager; // Thêm tham chiếu đến InventoryUIManager
+    public InventoryUIManager inventoryUIManager;
+    
 
     // Start is called before the first frame update
     void Start()

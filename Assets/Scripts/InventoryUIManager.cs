@@ -11,8 +11,8 @@ public class InventoryUIManager : MonoBehaviour
     public GameObject inventorySlotPrefab; // Prefab của slot trong kho
 
     private List<InventorySlot> inventorySlots = new List<InventorySlot>();
-
     public Text inventoryFullMessage;
+    private bool canCollect = true;
 
     private void Awake()
     {
@@ -22,39 +22,46 @@ public class InventoryUIManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Đảm bảo chỉ có một instance của InventoryUIManager
+            Destroy(gameObject); 
             return;
         }
-        DontDestroyOnLoad(gameObject); // Đảm bảo InventoryUIManager không bị phá hủy khi load scene khác
+        DontDestroyOnLoad(gameObject); 
     }
 
     void Start()
     {
-        // Ẩn kho đồ khi bắt đầu
         inventoryUI.SetActive(false);
         inventoryFullMessage.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        // Kiểm tra nếu người chơi nhấn phím "I" để bật/tắt Inventory UI
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
+        }
+        if(inventorySlots.Count >= 25)
+        {
+            inventoryFullMessage.gameObject.SetActive(true);
+        }
+        else 
+        {
+            inventoryFullMessage.gameObject.SetActive(false);
         }
     }
 
     public void ToggleInventory()
     {
         inventoryUI.SetActive(!inventoryUI.activeSelf);
-        Cursor.visible = inventoryUI.activeSelf; // Hiển thị hoặc ẩn con trỏ chuột
+        Cursor.visible = inventoryUI.activeSelf; 
         Cursor.lockState = inventoryUI.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     public void AddItem(Item item)
     {
-        if(inventorySlots.Count <=20)
-        {
+        if(inventorySlots.Count < 25 && canCollect == true)
+        { 
+            Debug.Log("So luong do trong kho: " + inventorySlots.Count);
             GameObject slotObject = Instantiate(inventorySlotPrefab, inventorySlotParent);
             InventorySlot slot = slotObject.GetComponent<InventorySlot>();
             if (slot != null)
@@ -64,15 +71,15 @@ public class InventoryUIManager : MonoBehaviour
             }
         }
         else
-        {
+        {   
+            canCollect = false;
             inventoryFullMessage.gameObject.SetActive(true);
         }
         
     }
 
     public void RemoveItem(Item item)
-    {
-        // Tìm slot chứa item và xóa item
+    { 
         InventorySlot slotToRemove = inventorySlots.Find(slot => slot.GetItem() == item);
         if (slotToRemove != null)
         {
