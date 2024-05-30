@@ -14,15 +14,15 @@ public class SkillManager : MonoBehaviour
 
     private bool isAnimating = false; // Biến để kiểm tra xem animation đang chạy hay không
 
-    private bool skill1OnCooldown = false; // Biến để kiểm tra xem kỹ năng 1 có đang trong thời gian hồi chiêu không
-    private bool skill2OnCooldown = false; // Biến để kiểm tra xem kỹ năng 2 có đang trong thời gian hồi chiêu không
-    private bool skill3OnCooldown = false; // Biến để kiểm tra xem kỹ năng 3 có đang trong thời gian hồi chiêu không
-    private bool skill4OnCooldown = false; // Biến để kiểm tra xem kỹ năng 4 có đang trong thời gian hồi chiêu không
+    public bool skill1OnCooldown = false; // Biến để kiểm tra xem kỹ năng 1 có đang trong thời gian hồi chiêu không
+    public bool skill2OnCooldown = false; // Biến để kiểm tra xem kỹ năng 2 có đang trong thời gian hồi chiêu không
+    public bool skill3OnCooldown = false; // Biến để kiểm tra xem kỹ năng 3 có đang trong thời gian hồi chiêu không
+    public bool skill4OnCooldown = false; // Biến để kiểm tra xem kỹ năng 4 có đang trong thời gian hồi chiêu không
 
-    private float skill1CooldownTime = 3f; // Thời gian hồi chiêu cho kỹ năng 1
-    private float skill2CooldownTime = 5f; // Thời gian hồi chiêu cho kỹ năng 2
-    private float skill3CooldownTime = 7f; // Thời gian hồi chiêu cho kỹ năng 3
-    private float skill4CooldownTime = 9f; // Thời gian hồi chiêu cho kỹ năng 4
+    public float skill1CooldownTime = 3f; // Thời gian hồi chiêu cho kỹ năng 1
+    public float skill2CooldownTime = 5f; // Thời gian hồi chiêu cho kỹ năng 2
+    public float skill3CooldownTime = 7f; // Thời gian hồi chiêu cho kỹ năng 3
+    public float skill4CooldownTime = 9f; // Thời gian hồi chiêu cho kỹ năng 4
 
     // Thêm các giá trị mana cần thiết cho từng skill
     public float skill1ManaCost = 10f;
