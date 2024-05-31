@@ -116,10 +116,19 @@ public class PlayerController2 : MonoBehaviour
         this.canMove = canMove;
     }
 
-    // Phương thức để hồi mana (tùy chọn)
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Đảm bảo máu không vượt quá giới hạn tối đa và không nhỏ hơn 0
+        FindObjectOfType<HealthBarManager>().UpdateHealth();
+    }
+
+    // Phương thức để hồi mana
     public void RegenerateMana(float amount)
     {
-        currentMana = Mathf.Min(currentMana + amount, maxMana);
+        currentMana += amount;
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+        FindObjectOfType<ManaBarManager>().UpdateMana();
     }
 
     // Phương thức để nhận sát thương từ enemy

@@ -355,6 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 7859343265994011124}
+  useButton: {fileID: 0}
   removeButton: {fileID: 6196646094471482055}
   itemNameText: {fileID: 1237794880618176159}
 --- !u!1 &4359157955717928339
@@ -514,8 +515,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.6829, y: 9.6437}
-  m_SizeDelta: {x: 68.1413, y: 41.2369}
+  m_AnchoredPosition: {x: -1.077, y: 7.9958}
+  m_SizeDelta: {x: 44.0692, y: 37.9412}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &234942907343860464
 CanvasRenderer:

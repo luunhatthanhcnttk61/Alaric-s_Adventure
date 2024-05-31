@@ -7602,22 +7602,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7109101515704881744}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8840059134916706981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8840059134916706980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2483fc3d862d9b14e98f6c164823a81b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthValue: 40
-  coinValue: 0
-  collectEffect: {fileID: 1326848355}
-  item: {fileID: 0}
 --- !u!65 &8840059134916706982
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7631,3 +7615,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7080879, y: 0.6236626, z: 0.65567684}
   m_Center: {x: -0.011930466, y: 0.040068984, z: 0.004526615}
+--- !u!114 &8840059134916706984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840059134916706980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c276905448e12a4495ba4be32ec2ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthValue: 50
+  collectEffect: {fileID: 1326848355}

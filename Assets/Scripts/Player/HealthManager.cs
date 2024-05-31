@@ -23,7 +23,7 @@ public class HealthManager : MonoBehaviour
         thePlayer.TakeDamage(damage, direction);
         if (thePlayer.currentHealth <= 0)
         {
-            // Xử lý khi máu bằng 0 (ví dụ: game over)
+            // Xử lý khi máu bằng 0 
         }
     }
 
