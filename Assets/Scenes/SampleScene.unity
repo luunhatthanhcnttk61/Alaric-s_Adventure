@@ -123,6 +123,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: e3e27d6aeb358a24fb9c560abf1fa950, type: 2}
+--- !u!114 &89318098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8007782214341730117, guid: 33b6306d68335f24c89e6b12de11e5b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 533426334}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &100419305
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0.28429285, y: -0, z: -0, w: 0.9587375}
-  m_LocalPosition: {x: 15.4, y: 6.65, z: 10.03}
+  m_LocalPosition: {x: 15.4, y: 10.76, z: 6.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -905,6 +917,7 @@ MonoBehaviour:
   skill2: {fileID: 1285046512}
   skill3: {fileID: 1285046515}
   skill4: {fileID: 1285046514}
+  skillCooldownUIManager: {fileID: 601251194}
   skill1OnCooldown: 0
   skill2OnCooldown: 0
   skill3OnCooldown: 0
@@ -917,6 +930,10 @@ MonoBehaviour:
   skill2ManaCost: 30
   skill3ManaCost: 40
   skill4ManaCost: 70
+  skill1CooldownText: {fileID: 1282522708}
+  skill2CooldownText: {fileID: 2114519290}
+  skill3CooldownText: {fileID: 2045275790}
+  skill4CooldownText: {fileID: 303285630}
 --- !u!4 &491428809
 Transform:
   m_ObjectHideFlags: 0
@@ -1041,6 +1058,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1910622253}
     m_Modifications:
+    - target: {fileID: -8559831311730791719, guid: 33b6306d68335f24c89e6b12de11e5b6,
+        type: 3}
+      propertyPath: useButton
+      value: 
+      objectReference: {fileID: 1622921956}
+    - target: {fileID: -8559831311730791719, guid: 33b6306d68335f24c89e6b12de11e5b6,
+        type: 3}
+      propertyPath: removeButton
+      value: 
+      objectReference: {fileID: 89318098}
     - target: {fileID: 2848055525445437601, guid: 33b6306d68335f24c89e6b12de11e5b6,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1457,14 +1484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af36ee5ec70f4314d830caa9e087b391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillManager: {fileID: 491428808}
-  skill1Icon: {fileID: 1961993491}
   skill1CooldownText: {fileID: 1282522708}
-  skill2Icon: {fileID: 1086694174}
   skill2CooldownText: {fileID: 2114519290}
-  skill3Icon: {fileID: 859944576}
   skill3CooldownText: {fileID: 2045275790}
-  skill4Icon: {fileID: 1143964410}
   skill4CooldownText: {fileID: 303285630}
 --- !u!1 &652853672
 GameObject:
@@ -4939,6 +4961,18 @@ MonoBehaviour:
   coinValue: 1
   collectEffect: {fileID: 1326848355}
   item: {fileID: 0}
+--- !u!114 &1622921956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6196646094471482055, guid: 33b6306d68335f24c89e6b12de11e5b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 533426334}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649308057
 GameObject:
   m_ObjectHideFlags: 0

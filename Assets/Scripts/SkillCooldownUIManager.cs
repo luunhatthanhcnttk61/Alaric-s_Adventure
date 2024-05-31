@@ -4,18 +4,9 @@ using System.Collections;
 
 public class SkillCooldownUIManager : MonoBehaviour
 {
-    public SkillManager skillManager; // Tham chiếu đến SkillManager
-
-    public Image skill1Icon;
     public Text skill1CooldownText;
-
-    public Image skill2Icon;
     public Text skill2CooldownText;
-
-    public Image skill3Icon;
     public Text skill3CooldownText;
-
-    public Image skill4Icon;
     public Text skill4CooldownText;
 
     private void Start()
@@ -26,24 +17,15 @@ public class SkillCooldownUIManager : MonoBehaviour
         skill4CooldownText.text = "";
     }
 
-    private void Update()
+    public IEnumerator UpdateCooldownUI(float cooldownTime, Text cooldownText)
     {
-        UpdateCooldownUI(skillManager.skill1OnCooldown, skillManager.skill1CooldownTime, skill1CooldownText);
-        UpdateCooldownUI(skillManager.skill2OnCooldown, skillManager.skill2CooldownTime, skill2CooldownText);
-        UpdateCooldownUI(skillManager.skill3OnCooldown, skillManager.skill3CooldownTime, skill3CooldownText);
-        UpdateCooldownUI(skillManager.skill4OnCooldown, skillManager.skill4CooldownTime, skill4CooldownText);
-    }
-
-    private void UpdateCooldownUI(bool isOnCooldown, float cooldownTime, Text cooldownText)
-    {
-        if (isOnCooldown)
+        float remainingTime = cooldownTime;
+        while (remainingTime > 0)
         {
-            cooldownTime -= Time.deltaTime;
-            cooldownText.text = Mathf.Ceil(cooldownTime).ToString();
+            cooldownText.text = Mathf.Ceil(remainingTime).ToString();
+            yield return new WaitForSeconds(1f); // Chờ 1 giây
+            remainingTime -= 1f;
         }
-        else
-        {
-            cooldownText.text = "";
-        }
+        cooldownText.text = ""; // Khi hết thời gian, xóa text
     }
 }
