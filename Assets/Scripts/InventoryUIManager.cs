@@ -33,6 +33,7 @@ public class InventoryUIManager : MonoBehaviour
     {
         inventoryUI.SetActive(false);
         inventoryFullMessage.gameObject.SetActive(false);
+
     }
 
     private void Update()

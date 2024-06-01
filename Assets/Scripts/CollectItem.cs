@@ -62,8 +62,8 @@ public class CollectItem : MonoBehaviour
             GameManager gameManager = FindObjectOfType<GameManager>();
             if (gameManager != null)
             {
-                gameManager.AddCoins(coinValue);
-                Instantiate(collectEffect, transform.position, transform.rotation);
+                // gameManager.AddCoins(coinValue);
+                // Instantiate(collectEffect, transform.position, transform.rotation);
                 gameManager.AddHealthItem(healthValue);
                 Instantiate(collectEffect, transform.position, transform.rotation);
 
