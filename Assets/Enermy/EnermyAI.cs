@@ -4,43 +4,45 @@ using System.Collections;
 
 public class EnermyAI : MonoBehaviour
 {
-    public Transform player; // Tham chiếu đến Transform của player
-    public float attackRange = 2f; // Phạm vi tấn công
-    public float chaseRange = 10f; // Phạm vi phát hiện player
-    public float wanderRange = 20f; // Phạm vi lang thang
-    public float wanderTimer = 5f; // Thời gian giữa các lần chọn điểm lang thang mới
-    public float attackCooldown = 1.5f; // Thời gian hồi chiêu giữa các lần tấn công
-    public float wanderSpeed = 1f; // Tốc độ di chuyển khi lang thang
-    public float chaseSpeed = 2f; // Tốc độ di chuyển khi đuổi theo người chơi
-    public int maxHealth = 300; // Máu tối đa của Enemy Bot
-    public Collider handCollider; // Collider của tay
-    public Collider bodyCollider; // Collider của object enemy
-    public HandAttack handAttack; // Tham chiếu đến script HandAttack
+    public Transform player; 
+    public float attackRange = 2f; 
+    public float chaseRange = 10f;
+    public float wanderRange = 20f;
+    public float wanderTimer = 5f;
+    public float attackCooldown = 1.5f;
+    public float wanderSpeed = 1f;
+    public float chaseSpeed = 2f;
+    public int maxHealth = 300;
+    public Collider handCollider;
+    public Collider bodyCollider;
+    public HandAttack handAttack; 
 
-    public int currentHealth; // Máu hiện tại của Enemy Bot
+    public int currentHealth; 
     private NavMeshAgent navMeshAgent;
     private Animator animator;
     private bool isAttacking = false;
     private bool isDead = false;
     private bool canAttack = false;
-    private bool hasAttacked = false; // Cờ để theo dõi tấn công
-    private Vector3 wanderTarget; // Mục tiêu lang thang
-    private float wanderTimerCounter; // Bộ đếm thời gian cho lang thang
+    private bool hasAttacked = false;
+    private Vector3 wanderTarget; 
+    private float wanderTimerCounter;
+    private BotAudioManager botAudioManager;
 
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        currentHealth = maxHealth; // Khởi tạo máu hiện tại bằng máu tối đa
-        handCollider.enabled = false; // Tắt collider của tay khi bắt đầu
+        currentHealth = maxHealth; 
+        handCollider.enabled = false; 
         wanderTimerCounter = wanderTimer;
+        botAudioManager = GetComponent<BotAudioManager>();
 
         if (handAttack == null)
         {
             Debug.LogError("HandAttack script is not assigned in the Inspector.");
         }
 
-        SetNewWanderTarget(); // Chọn điểm lang thang đầu tiên
+        SetNewWanderTarget(); 
     }
 
     void Update()
@@ -102,9 +104,7 @@ public class EnermyAI : MonoBehaviour
     {
         if (canAttack && !hasAttacked && other.CompareTag("Player"))
         {   
-            //handCollider.enabled = false;
-            // Tấn công player
-            other.GetComponent<PlayerController2>().TakeDamage(10, transform.forward); // Giả sử mỗi đòn tấn công gây 10 sát thương
+            other.GetComponent<PlayerController2>().TakeDamage(10, transform.forward);
             hasAttacked = true; // Đánh dấu đã tấn công
         }
     }
@@ -123,22 +123,23 @@ public class EnermyAI : MonoBehaviour
         if(currentHealth > 0 && currentHealth <= maxHealth)
         {
             currentHealth -= damage;
-            animator.SetTrigger("TakeDamage"); // Kích hoạt animation nhận sát thương
+            animator.SetTrigger("TakeDamage"); 
+            botAudioManager?.PlayTakeDamageSound(0f, 0.5f); 
         }
         if (currentHealth <= 0)
         {
             Die();
-                   
             Destroy(gameObject, 4f); 
         }
-
     }
 
     public void Die()
     {
-        navMeshAgent.isStopped = true; // Dừng di chuyển khi chết
-        Debug.Log("Animation die of bot");
-        animator.SetTrigger("Die"); // Kích hoạt animation chết
+        isDead = true;
+        animator.SetTrigger("Die");
+        navMeshAgent.isStopped = true;
+        bodyCollider.enabled = false;
+        botAudioManager?.PlayDieSound(0f, 1f);
         Debug.Log("Da kich hoat animation die");
     }
 
@@ -197,6 +198,6 @@ public class EnermyAI : MonoBehaviour
     {
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); // 5f là tốc độ quay, bạn có thể điều chỉnh giá trị này
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); 
     }
 }
