@@ -120,7 +120,7 @@ public class EnermyAI : MonoBehaviour
     // Hàm để nhận sát thương từ player
     public void TakeDamage(int damage)
     {
-        if(currentHealth > 0 && currentHealth <= maxHealth)
+        if(currentHealth > 0 && currentHealth <= maxHealth && isDead == false)
         {
             currentHealth -= damage;
             animator.SetTrigger("TakeDamage"); 
