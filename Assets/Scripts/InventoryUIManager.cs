@@ -20,20 +20,19 @@ public class InventoryUIManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         inventoryUI.SetActive(false);
         inventoryFullMessage.gameObject.SetActive(false);
-
     }
 
     private void Update()

@@ -9,7 +9,11 @@ public class KeyItem : Item
     public override void Use()
     {
         base.Use();
-        LoadScene();
+        if (!string.IsNullOrEmpty(sceneToLoad))
+        {
+            SceneManager.LoadScene(sceneToLoad);
+        }
+        RemoveFromInventory();
     }
 
     public void SetSceneToLoad(string sceneName)

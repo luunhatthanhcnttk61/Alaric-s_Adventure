@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: KeyItem
   m_EditorClassIdentifier: 
   itemName: Key
-  icon: {fileID: 21300000, guid: 1d6564a942907794eb79dfbbd3e23c7c, type: 3}
+  icon: {fileID: 21300000, guid: 7b23227de5a631348b5726c5df883086, type: 3}
   isDefaultItem: 0
   sceneToLoad: night demo scene
