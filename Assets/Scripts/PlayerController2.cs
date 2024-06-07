@@ -19,23 +19,34 @@ public class PlayerController2 : MonoBehaviour
     public float knockBackTime;
     private float knockBackCounter;
 
-    private bool canMove = true; // Biến để kiểm tra xem player có thể di chuyển không
+    private bool canMove = true;
 
-    // Thuộc tính sức khỏe
     public int maxHealth = 300;
     public int currentHealth;
 
-    // Thêm thuộc tính mana
     public float maxMana = 300f;
     public float currentMana;
     private float manaRegenTimer = 0f;
-    public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
+    public int manaRegenRate = 5;
+
+    // Armour
+    public int maxArmour = 200;
+    public int currentArmour;
+
+    private ArmourManager armourBarManager;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        currentHealth = maxHealth; // Khởi tạo máu đầy đủ khi bắt đầu game
-        currentMana = maxMana; // Khởi tạo mana đầy đủ khi bắt đầu game
+        currentHealth = maxHealth;
+        currentMana = maxMana;
+        currentArmour = 0; // Khởi đầu giáp bằng 0
+        armourBarManager = FindObjectOfType<ArmourManager>();
+
+        if (armourBarManager != null)
+        {
+            armourBarManager.UpdateArmour(currentArmour);
+        }
     }
 
     void Update()
@@ -81,14 +92,13 @@ public class PlayerController2 : MonoBehaviour
         manaRegenTimer -= Time.deltaTime;
         if (manaRegenTimer <= 0)
         {
-            // Kiểm tra xem mana đã đạt đến giá trị tối đa chưa
             if (currentMana < maxMana)
             {
                 currentMana += manaRegenRate;
-                currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+                currentMana = Mathf.Clamp(currentMana, 0, maxMana);
                 FindObjectOfType<ManaBarManager>().UpdateMana();
             }
-            manaRegenTimer = 1f; // Đặt lại bộ đếm cho việc hồi mana mỗi giây
+            manaRegenTimer = 1f;
         }
         FindObjectOfType<ManaBarManager>().UpdateMana();
     }
@@ -100,7 +110,6 @@ public class PlayerController2 : MonoBehaviour
         moveDirection.y = knockBackForce;
     }
 
-    // Phương thức để trừ mana
     public bool UseMana(float amount)
     {
         if (currentMana >= amount)
@@ -119,24 +128,40 @@ public class PlayerController2 : MonoBehaviour
     public void Heal(int amount)
     {
         currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Đảm bảo máu không vượt quá giới hạn tối đa và không nhỏ hơn 0
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         FindObjectOfType<HealthBarManager>().UpdateHealth();
     }
 
-    // Phương thức để hồi mana
     public void RegenerateMana(float amount)
     {
         currentMana += amount;
-        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana);
         FindObjectOfType<ManaBarManager>().UpdateMana();
     }
 
-    // Phương thức để nhận sát thương từ enemy
     public void TakeDamage(int damage, Vector3 direction)
     {
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        FindObjectOfType<HealthBarManager>().UpdateHealth();
+        if (currentArmour > 0)
+        {
+            int remainingDamage = damage - currentArmour;
+            currentArmour -= damage;
+            currentArmour = Mathf.Clamp(currentArmour, 0, maxArmour);
+            armourBarManager.UpdateArmour(currentArmour);
+
+            if (remainingDamage > 0)
+            {
+                currentHealth -= remainingDamage;
+                currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+                FindObjectOfType<HealthBarManager>().UpdateHealth();
+            }
+        }
+        else
+        {
+            currentHealth -= damage;
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            FindObjectOfType<HealthBarManager>().UpdateHealth();
+        }
+
         anim.SetTrigger("TakeDamage");
 
         if (currentHealth <= 0)
@@ -146,20 +171,14 @@ public class PlayerController2 : MonoBehaviour
         else
         {
             StartCoroutine(TakeDamageRoutine());
-            //KnockBack(direction);
         }
     }
 
     private IEnumerator TakeDamageRoutine()
     {
-        // Tạm thời dừng di chuyển
         SetCanMove(false);
         anim.SetTrigger("TakeDamage");
-
-        // Thời gian chờ cho animation nhận sát thương (điều chỉnh thời gian này để phù hợp với animation của bạn)
         yield return new WaitForSeconds(0.5f);
-
-        // Cho phép di chuyển lại
         SetCanMove(true);
     }
 
@@ -169,25 +188,24 @@ public class PlayerController2 : MonoBehaviour
         anim.SetTrigger("Die");
         Debug.Log("Player has died!");
 
-        // Tắt tất cả các Collider của Player
         Collider[] colliders = GetComponents<Collider>();
         foreach (Collider col in colliders)
         {
             col.enabled = false;
         }
-
-        // Tắt CharacterController
         if (controller != null)
         {
             controller.enabled = false;
         }
 
-        // Ngừng pivot rotation
         pivot.gameObject.SetActive(false);
-
-        // Vô hiệu hóa script này
         this.enabled = false;
+    }
 
-        // Thực hiện các hành động khi player chết (hiển thị màn hình game over)
+    public void AddArmour(int amount)
+    {
+        currentArmour += amount;
+        currentArmour = Mathf.Clamp(currentArmour, 0, maxArmour);
+        armourBarManager.UpdateArmour(currentArmour);
     }
 }

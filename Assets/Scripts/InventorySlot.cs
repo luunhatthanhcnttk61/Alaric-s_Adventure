@@ -12,7 +12,7 @@ public class InventorySlot : MonoBehaviour
 
     private void Start()
     {
-        useButton.onClick.AddListener(UseItem);
+        useButton.onClick.AddListener(ShowUseItemPopup);
         removeButton.onClick.AddListener(RemoveItem);
     }
 
@@ -43,6 +43,8 @@ public class InventorySlot : MonoBehaviour
         if (item != null)
         {
             item.Use();
+            Inventory.Instance.Remove(item); // Xóa item khỏi kho sau khi sử dụng
+            InventoryUIManager.Instance.UpdateUI();
         }
     }
 
@@ -57,5 +59,13 @@ public class InventorySlot : MonoBehaviour
     public Item GetItem()
     {
         return item;
+    }
+
+    private void ShowUseItemPopup()
+    {
+        if (item != null)
+        {
+            InventoryUIManager.Instance.ShowItemUsePopup(item, this);
+        }
     }
 }

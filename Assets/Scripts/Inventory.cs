@@ -11,10 +11,11 @@ public class Inventory : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogWarning("More than one instance of Inventory found!");
+            Destroy(gameObject);
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject); // Không phá hủy đối tượng này khi chuyển scene
     }
 
     #endregion
@@ -22,7 +23,7 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
-    public int space = 25; // Số lượng slot trong kho
+    public int space = 24; // Số lượng slot trong kho
 
     public List<Item> items = new List<Item>();
 
@@ -30,16 +31,13 @@ public class Inventory : MonoBehaviour
     {
         if (!item.isDefaultItem)
         {
-            if (items.Count > space)
+            if (items.Count >= space)
             {
                 Debug.Log("Not enough room.");
                 return false;
             }
-            if(items.Count <= space)
-            {
-                items.Add(item);
-            }
-            
+
+            items.Add(item);
 
             if (onItemChangedCallback != null)
                 onItemChangedCallback.Invoke();
