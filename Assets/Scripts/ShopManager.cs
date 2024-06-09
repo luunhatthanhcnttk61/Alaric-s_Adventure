@@ -9,9 +9,12 @@ public class ShopManager : MonoBehaviour
     public Text confirmationText;
     public Button yesButton;
     public Button noButton;
-    public GameObject itemSlotPrefab;  
-    public Transform itemSlotContainer; 
-    private int playerCoins;
+    public GameObject itemSlotPrefab;
+    public Transform itemSlotContainer;
+    public GameManager gameManager; 
+
+    public List<ItemShop> items;
+
     private string selectedItem;
     private int selectedItemPrice;
 
@@ -51,18 +54,11 @@ public class ShopManager : MonoBehaviour
 
     private void PopulateShop()
     {
-        List<ItemData> items = new List<ItemData>
-        {
-            new ItemData("Item 1", 50, Resources.Load<Sprite>("Item1Sprite")),
-            new ItemData("Item 2", 75, Resources.Load<Sprite>("Item2Sprite")),
-            new ItemData("Item 3", 100, Resources.Load<Sprite>("Item3Sprite"))
-        };
-
         foreach (var item in items)
         {
             GameObject itemSlotObject = Instantiate(itemSlotPrefab, itemSlotContainer);
             ItemSlotShop itemSlot = itemSlotObject.GetComponent<ItemSlotShop>();
-            itemSlot.SetUpItemSlot(item.sprite, item.name, item.price, this);
+            itemSlot.SetUpItemSlot(item, this);
         }
     }
 
@@ -76,9 +72,9 @@ public class ShopManager : MonoBehaviour
 
     public void OnYesButtonClicked()
     {
-        if (playerCoins >= selectedItemPrice)
+        if (gameManager.GetPlayerCoins() >= selectedItemPrice)
         {
-            playerCoins -= selectedItemPrice;
+            gameManager.SpendCoins(selectedItemPrice);
             Debug.Log("Bought " + selectedItem);
             confirmationPanel.SetActive(false);
             ToggleShop(); 
@@ -93,25 +89,5 @@ public class ShopManager : MonoBehaviour
     public void OnNoButtonClicked()
     {
         confirmationPanel.SetActive(false);
-    }
-
-    public void SetPlayerCoins(int coins)
-    {
-        playerCoins = coins;
-    }
-}
-
-[System.Serializable]
-public class ItemData
-{
-    public string name;
-    public int price;
-    public Sprite sprite;
-
-    public ItemData(string name, int price, Sprite sprite)
-    {
-        this.name = name;
-        this.price = price;
-        this.sprite = sprite;
     }
 }

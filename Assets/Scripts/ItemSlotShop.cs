@@ -3,28 +3,28 @@ using UnityEngine.UI;
 
 public class ItemSlotShop : MonoBehaviour
 {
-    public Image itemImage;
+    public Image icon;
     public Text itemNameText;
-    public Text itemPriceText;
-    public Button buyButton;
+    public Text priceText;
+    public Button buyButton;  
 
+    private ShopManager shopManager;
     private string itemName;
     private int itemPrice;
-    private ShopManager shopManager;
 
-    public void SetUpItemSlot(Sprite itemSprite, string name, int price, ShopManager manager)
+    public void SetUpItemSlot(ItemShop item, ShopManager manager)
     {
-        itemImage.sprite = itemSprite;
-        itemNameText.text = name;
-        itemPriceText.text = price + " Coins";
-        itemName = name;
-        itemPrice = price;
+        icon.sprite = item.icon;
+        itemNameText.text = item.itemName;
+        priceText.text = item.price.ToString();
+        itemName = item.itemName;
+        itemPrice = item.price;
         shopManager = manager;
 
         buyButton.onClick.AddListener(OnBuyButtonClicked);
     }
 
-    private void OnBuyButtonClicked()
+    public void OnBuyButtonClicked()
     {
         shopManager.OnItemButtonClicked(itemName, itemPrice);
     }
