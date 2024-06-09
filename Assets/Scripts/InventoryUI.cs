@@ -14,7 +14,7 @@ public class InventoryUI : MonoBehaviour
         inventory.onItemChangedCallback += UpdateUI;
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
-        UpdateUI(); // Ensure UI is updated on start
+        UpdateUI(); 
     }
 
     void Update()
@@ -22,14 +22,14 @@ public class InventoryUI : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
-            Cursor.visible = inventoryUI.activeSelf; // Hiển thị hoặc ẩn con trỏ chuột
+            Cursor.visible = inventoryUI.activeSelf; 
             Cursor.lockState = inventoryUI.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
         }
     }
 
     void UpdateUI()
     {
-        slots = itemsParent.GetComponentsInChildren<InventorySlot>(); // Update slots
+        slots = itemsParent.GetComponentsInChildren<InventorySlot>(); 
         for (int i = 0; i < slots.Length; i++)
         {
             if (i < inventory.items.Count)

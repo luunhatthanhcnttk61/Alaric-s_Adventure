@@ -21,7 +21,7 @@ public class PlayerController2 : MonoBehaviour
 
     private bool canMove = true;
 
-    public int maxHealth = 300;
+    public int maxHealth = 500;
     public int currentHealth;
 
     public float maxMana = 300f;
@@ -40,7 +40,7 @@ public class PlayerController2 : MonoBehaviour
         controller = GetComponent<CharacterController>();
         currentHealth = maxHealth;
         currentMana = maxMana;
-        currentArmour = 0; // Khởi đầu giáp bằng 0
+        currentArmour = 0; 
         armourBarManager = FindObjectOfType<ArmourManager>();
 
         if (armourBarManager != null)
@@ -88,7 +88,6 @@ public class PlayerController2 : MonoBehaviour
             anim.SetFloat("Speed", (Mathf.Abs(Input.GetAxis("Vertical")) + Mathf.Abs(Input.GetAxis("Horizontal"))));
         }
 
-        // Hồi mana mỗi giây
         manaRegenTimer -= Time.deltaTime;
         if (manaRegenTimer <= 0)
         {

@@ -27,7 +27,6 @@ public class CameraController : MonoBehaviour
             offset = target.position - transform.position;
         }    
         pivot.transform.position = target.transform.position;
-        //pivot.transform.parent = target.transform;
         pivot.transform.parent = null;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -39,13 +38,10 @@ public class CameraController : MonoBehaviour
     {
         pivot.transform.position = target.transform.position;
 
-        //Get X position of mouse and rotate target
         float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
         pivot.Rotate(0, horizontal, 0);
 
-        //Get Y position of mouse and rotate target
         float vertical = Input.GetAxis("Mouse Y") * rotateSpeed;
-        //pivot.Rotate(vertical, 0, 0);
         if(invertY)
         {
             pivot.Rotate(vertical, 0, 0);
@@ -75,7 +71,6 @@ public class CameraController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, .5f, transform.position.z);
         }
 
-        //transform.position = target.position - offset;
 
         transform.LookAt(target);
     }

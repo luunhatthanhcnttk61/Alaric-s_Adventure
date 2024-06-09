@@ -10,7 +10,6 @@ public class HealthBar : MonoBehaviour
     private int m_currentHealth;
     private int m_baseHealth;
 
-    // Thiết lập giá trị máu ban đầu khi trò chơi bắt đầu
     public void Start()
     {
         if (m_fillBar == null || m_status == null)
@@ -19,14 +18,11 @@ public class HealthBar : MonoBehaviour
             return;
         }
 
-        // Tiếp tục thực hiện các thao tác khởi tạo
         m_currentHealth = 1000;
         m_baseHealth = m_currentHealth;
 
-        // Cập nhật thanh máu
         m_fillBar.fillAmount = 1.0f;
 
-        // Cập nhật trạng thái
         m_status.text = "Health: " + m_currentHealth + " / " + m_baseHealth;
     }
 
@@ -61,15 +57,11 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-
-    // Hàm cập nhật máu mỗi giây
     private void Update()
     {
-        // Hồi máu mỗi giây
         Heal(10);
     }
 
-    // Hàm hồi máu
     public void Heal(int amount)
     {
         m_currentHealth += amount;
@@ -80,7 +72,6 @@ public class HealthBar : MonoBehaviour
         UpdateHealth(m_currentHealth, m_baseHealth);
     }
 
-    // Hàm giảm máu theo lượng sát thương từ Bot
     public void TakeDamage(int damage)
     {
         m_currentHealth -= damage;

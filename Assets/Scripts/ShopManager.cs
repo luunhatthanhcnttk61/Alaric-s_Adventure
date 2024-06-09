@@ -11,10 +11,11 @@ public class ShopManager : MonoBehaviour
     public Button noButton;
     public GameObject itemSlotPrefab;
     public Transform itemSlotContainer;
-    public GameManager gameManager; 
+    public GameManager gameManager;
 
-    public List<ItemShop> items;
+    public List<ItemShop> items; 
 
+    private int selectedItemIndex;
     private string selectedItem;
     private int selectedItemPrice;
 
@@ -54,18 +55,24 @@ public class ShopManager : MonoBehaviour
 
     private void PopulateShop()
     {
-        foreach (var item in items)
+        foreach (Transform child in itemSlotContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < items.Count; i++)
         {
             GameObject itemSlotObject = Instantiate(itemSlotPrefab, itemSlotContainer);
             ItemSlotShop itemSlot = itemSlotObject.GetComponent<ItemSlotShop>();
-            itemSlot.SetUpItemSlot(item, this);
+            itemSlot.SetUpItemSlot(items[i], this, i);
         }
     }
 
-    public void OnItemButtonClicked(string itemName, int itemPrice)
+    public void OnItemButtonClicked(string itemName, int itemPrice, int itemIndex)
     {
         selectedItem = itemName;
         selectedItemPrice = itemPrice;
+        selectedItemIndex = itemIndex;
         confirmationText.text = "Do you want to buy " + itemName + " for " + itemPrice + " Coins?";
         confirmationPanel.SetActive(true);
     }
@@ -75,9 +82,11 @@ public class ShopManager : MonoBehaviour
         if (gameManager.GetPlayerCoins() >= selectedItemPrice)
         {
             gameManager.SpendCoins(selectedItemPrice);
+            gameManager.AddItemToInventory(items[selectedItemIndex]);
+            items.RemoveAt(selectedItemIndex);
             Debug.Log("Bought " + selectedItem);
             confirmationPanel.SetActive(false);
-            ToggleShop(); 
+            PopulateShop();
         }
         else
         {

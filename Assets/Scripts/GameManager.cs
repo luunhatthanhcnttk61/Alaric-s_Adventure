@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public PlayerController2 player;
     public Text inventoryFullText;
     public Text coinsText;
-
     private int totalCoins = 0;
 
     private void Start()
@@ -77,4 +76,18 @@ public class GameManager : MonoBehaviour
         totalCoins -= amount;
         UpdateCoinsText();
     }
+
+    public void AddItemToInventory(ItemShop itemShop)
+    {
+        Item newItem = new Item { itemName = itemShop.itemName, icon = itemShop.icon, /*price = itemShop.price*/ };
+        if (TryAddItemToInventory(newItem))
+        {
+            Debug.Log("Item added to inventory: " + newItem.itemName);
+        }
+        else
+        {
+            Debug.Log("Failed to add item to inventory: " + newItem.itemName);
+        }
+    }
+
 }

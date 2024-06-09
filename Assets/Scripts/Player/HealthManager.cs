@@ -4,27 +4,27 @@ using System.Collections;
 public class HealthManager : MonoBehaviour
 {
     public PlayerController2 thePlayer;
-    public int healthRegenRate = 2; // Tốc độ hồi máu mỗi giây
-    public float timeToRegen = 2f; // Thời gian chờ để bắt đầu hồi máu
+    public int healthRegenRate = 2; 
+    public float timeToRegen = 2f; 
 
-    private float lastDamageTime; // Thời gian cuối cùng nhận sát thương
+    private float lastDamageTime; 
 
     void Start()
     {
         thePlayer = FindObjectOfType<PlayerController2>();
-        lastDamageTime = Time.time; // Khởi tạo thời gian cuối cùng nhận sát thương
-        StartCoroutine(RegenHealth()); // Bắt đầu Coroutine hồi máu
+        lastDamageTime = Time.time; 
+        StartCoroutine(RegenHealth()); 
     }
 
     public void HurtPlayer(int damage, Vector3 direction)
     {
         thePlayer.currentHealth -= damage;
-        lastDamageTime = Time.time; // Cập nhật thời gian nhận sát thương
+        lastDamageTime = Time.time; 
         thePlayer.TakeDamage(damage, direction);
-        if (thePlayer.currentHealth <= 0)
-        {
-            // Xử lý khi máu bằng 0 
-        }
+        // if (thePlayer.currentHealth <= 0)
+        // {
+            
+        // }
     }
 
     public void HealPlayer(int healAmount)
@@ -46,7 +46,7 @@ public class HealthManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f); // Kiểm tra mỗi giây
+            yield return new WaitForSeconds(1f); 
 
             if (Time.time - lastDamageTime >= timeToRegen && thePlayer.currentHealth < thePlayer.maxHealth && thePlayer.currentHealth > 0)
             {
