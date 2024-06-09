@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Không phá hủy đối tượng này khi chuyển scene
+        DontDestroyOnLoad(gameObject); 
     }
 
     #endregion
@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
-    public int space = 24; // Số lượng slot trong kho
+    public int space = 24; 
 
     public List<Item> items = new List<Item>();
 

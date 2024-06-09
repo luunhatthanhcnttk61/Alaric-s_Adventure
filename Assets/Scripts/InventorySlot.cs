@@ -43,7 +43,7 @@ public class InventorySlot : MonoBehaviour
         if (item != null)
         {
             item.Use();
-            Inventory.Instance.Remove(item); // Xóa item khỏi kho sau khi sử dụng
+            Inventory.Instance.Remove(item); 
             InventoryUIManager.Instance.UpdateUI();
         }
     }

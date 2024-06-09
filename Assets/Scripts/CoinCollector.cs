@@ -20,7 +20,6 @@ public class CoinCollector : MonoBehaviour
 
             Instantiate(collectEffect, transform.position, transform.rotation);
 
-            // Phát âm thanh khi nhặt coin
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
             Destroy(gameObject);

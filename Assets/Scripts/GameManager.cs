@@ -79,7 +79,12 @@ public class GameManager : MonoBehaviour
 
     public void AddItemToInventory(ItemShop itemShop)
     {
-        Item newItem = new Item { itemName = itemShop.itemName, icon = itemShop.icon, /*price = itemShop.price*/ };
+        // Tạo một item mới và sao chép thông tin từ ItemShop
+        Item newItem = ScriptableObject.CreateInstance<Item>();
+        newItem.itemName = itemShop.itemName;
+        newItem.icon = itemShop.icon;
+
+        // Thêm item mới vào kho đồ
         if (TryAddItemToInventory(newItem))
         {
             Debug.Log("Item added to inventory: " + newItem.itemName);

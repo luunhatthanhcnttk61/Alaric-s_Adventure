@@ -3,57 +3,54 @@ using System.Collections;
 
 public class Sword : MonoBehaviour
 {
-    public float basicAttackCooldown = 1f; // Thời gian hồi chiêu cho chém thường
-    public float comboAttackCooldown = 3f; // Thời gian hồi chiêu cho liên hoàn chém
-    public float magicCooldown = 4f; // Thời gian hồi chiêu cho cầu phép
-    public float areaDamageCooldown = 7f; // Thời gian hồi chiêu cho vùng sát thương
+    public float basicAttackCooldown = 1f; 
+    public float comboAttackCooldown = 3f; 
+    public float magicCooldown = 4f; 
+    public float areaDamageCooldown = 7f; 
 
-    public int basicAttackDamage = 30; // Sát thương của chém thường
-    public int comboAttackDamage = 70; // Sát thương của liên hoàn chém
-    public int magicDamage = 90; // Sát thương của cầu phép
-    public int areaDamage = 150; // Sát thương của vùng sát thương
+    public int basicAttackDamage = 30; 
+    public int comboAttackDamage = 70;
+    public int magicDamage = 90; 
+    public int areaDamage = 150; 
 
-    public int basicAttackManaCost = 10; // Mana tiêu hao của chém thường
-    public int comboAttackManaCost = 30; // Mana tiêu hao của liên hoàn chém
-    public int magicManaCost = 40; // Mana tiêu hao của cầu phép
-    public int areaDamageManaCost = 70; // Mana tiêu hao của vùng sát thương
+    public int basicAttackManaCost = 10; 
+    public int comboAttackManaCost = 30; 
+    public int magicManaCost = 40; 
+    public int areaDamageManaCost = 70;
 
     private float basicAttackTimer = 0f;
     private float comboAttackTimer = 0f;
     private float magicTimer = 0f;
     private float areaDamageTimer = 0f;
     private int swordDamage = 0;
-    public int currentMana = 300; // Mana hiện tại
-    public int maxMana = 300; // Mana tối đa
+    public int currentMana = 300;
+    public int maxMana = 300;
     private float manaRegenTimer = 0f;
-    public int manaRegenRate = 5; // Tốc độ hồi mana mỗi giây
+    public int manaRegenRate = 5; 
 
-    public Collider swordCollider; // Thêm tham chiếu đến Collider của sword
+    public Collider swordCollider; 
 
     void Start()
     {
-        swordCollider.enabled = false; // Đảm bảo sword collider bị tắt khi bắt đầu
+        swordCollider.enabled = false; 
     }
 
     void Update()
     {
-        // Cập nhật thời gian hồi chiêu cho mỗi kỹ năng
         basicAttackTimer -= Time.deltaTime;
         comboAttackTimer -= Time.deltaTime;
         magicTimer -= Time.deltaTime;
         areaDamageTimer -= Time.deltaTime;
         
-        // Hồi mana mỗi giây
         manaRegenTimer -= Time.deltaTime;
         if (manaRegenTimer <= 0)
         {
-            // Kiểm tra xem mana đã đạt đến giá trị tối đa chưa
             if (currentMana < maxMana)
             {
                 currentMana += manaRegenRate;
-                currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+                currentMana = Mathf.Clamp(currentMana, 0, maxMana); 
             }
-            manaRegenTimer = 1f; // Đặt lại bộ đếm cho việc hồi mana mỗi giây
+            manaRegenTimer = 1f; 
         }
     }
 
@@ -63,15 +60,9 @@ public class Sword : MonoBehaviour
         {
             ReduceMana(basicAttackManaCost);
             UpdateSwordDamage(basicAttackDamage);
-            // Thực hiện chém thường
             Debug.Log("Basic Attack! Damage: " + swordDamage);
             
             StartCoroutine(EnableSwordColliderTemporarily(1f));
-
-            // Gây sát thương cho mục tiêu
-            //DealDamageToTarget(basicAttackDamage);
-
-            // Reset hồi chiêu và đặt lại thời gian hồi chiêu
             basicAttackTimer = basicAttackCooldown;
         }
     }
@@ -85,8 +76,6 @@ public class Sword : MonoBehaviour
             Debug.Log("Combo Attack! Damage: " + comboAttackDamage);
 
             StartCoroutine(EnableSwordColliderTemporarily(2.5f));
-
-            //DealDamageToTarget(comboAttackDamage);
             comboAttackTimer = comboAttackCooldown;
         }
     }
@@ -101,7 +90,6 @@ public class Sword : MonoBehaviour
 
             StartCoroutine(EnableSwordColliderTemporarily(1f));
 
-            //DealDamageToTarget(magicDamage);
             magicTimer = magicCooldown;
         }
     }
@@ -115,8 +103,6 @@ public class Sword : MonoBehaviour
             Debug.Log("Area Damage! Damage: " + areaDamage);
 
             StartCoroutine(EnableSwordColliderTemporarily(3f));
-
-            //DealDamageToTarget(areaDamage);
             areaDamageTimer = areaDamageCooldown;
         }
     }
@@ -142,13 +128,13 @@ public class Sword : MonoBehaviour
     public void ReduceMana(int amount)
     {
         currentMana -= amount;
-        currentMana = Mathf.Clamp(currentMana, 0, maxMana); // Đảm bảo mana không vượt quá giới hạn tối đa và không nhỏ hơn 0
+        currentMana = Mathf.Clamp(currentMana, 0, maxMana); 
     }
 
     private IEnumerator EnableSwordColliderTemporarily(float time)
     {
-        swordCollider.enabled = true; // Bật collider của sword
-        yield return new WaitForSeconds(time); // Thời gian chờ (điều chỉnh thời gian này để phù hợp với thời gian của skill)
-        swordCollider.enabled = false; // Tắt collider của sword
+        swordCollider.enabled = true; 
+        yield return new WaitForSeconds(time); 
+        swordCollider.enabled = false; 
     }
 }
