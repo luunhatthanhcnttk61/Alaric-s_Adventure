@@ -34,6 +34,13 @@ public class PlayerController2 : MonoBehaviour
     public int currentArmour;
 
     private ArmourManager armourBarManager;
+    public int attackPower;
+
+    public void AddAttackPower(int powerToAdd)
+    {
+        attackPower += powerToAdd;
+        Debug.Log("Added attack power: " + powerToAdd);
+    }
 
     void Start()
     {

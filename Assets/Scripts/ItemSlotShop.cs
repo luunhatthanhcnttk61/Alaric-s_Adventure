@@ -22,7 +22,7 @@ public class ItemSlotShop : MonoBehaviour
         itemIndex = index;
         shopManager = manager;
 
-        buyButton.onClick.RemoveAllListeners(); // Xóa tất cả các sự kiện cũ để tránh lỗi
+        buyButton.onClick.RemoveAllListeners(); 
         buyButton.onClick.AddListener(OnBuyButtonClicked);
     }
 

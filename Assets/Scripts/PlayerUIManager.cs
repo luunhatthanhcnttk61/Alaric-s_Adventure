@@ -5,11 +5,10 @@ public class PlayerUIManager : MonoBehaviour
 {
     public Image healthBarFill;
     public Image manaBarFill;
-    public PlayerController2 player; // Tham chiếu đến PlayerController2
+    public PlayerController2 player; 
 
     void Start()
     {
-        // Đảm bảo rằng các thành phần UI đã được gán
         if (healthBarFill == null)
         {
             Debug.LogError("HealthBar fill image is not assigned in the Inspector.");
@@ -32,7 +31,6 @@ public class PlayerUIManager : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        // Cập nhật thanh máu và mana dựa trên trạng thái của player
         if (player != null)
         {
             healthBarFill.fillAmount = (float)player.currentHealth / player.maxHealth;
