@@ -255,7 +255,7 @@ public class EnermyAI : MonoBehaviour
     void Update()
     {
         if (isDead)
-            return; // Không thực hiện hành động nếu đã chết
+            return;
 
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
@@ -294,7 +294,6 @@ public class EnermyAI : MonoBehaviour
             Debug.LogError("HandAttack script is not assigned or not found.");
         }
 
-        Debug.Log("Attacking player!");
 
         yield return new WaitForSeconds(attackCooldown);
 
@@ -327,7 +326,7 @@ public class EnermyAI : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (isDead)
-            return; // Không thực hiện hành động nếu đã chết
+            return; 
 
         currentHealth -= damage;
         animator.SetTrigger("TakeDamage"); 
@@ -350,9 +349,8 @@ public class EnermyAI : MonoBehaviour
         bodyCollider.enabled = false;
         handCollider.enabled = false;
         botAudioManager?.PlayDieSound(0f, 1f);
-        Debug.Log("Da kich hoat animation die");
 
-        Destroy(gameObject, 4f); // Hủy game object sau 4 giây để animation có thể hoàn thành
+        Destroy(gameObject, 4f); 
     }
 
     public void EnableAttack()

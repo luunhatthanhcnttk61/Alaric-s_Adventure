@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class EnermyHealth : MonoBehaviour
 {
     public EnermyAI enermyAI;
-    public Image healthBarFill; // Tham chiếu đến Image của HealthBarFill
+    public Image healthBarFill; 
 
     void Start()
     {
@@ -31,7 +31,6 @@ public class EnermyHealth : MonoBehaviour
     public void UpdateHealth()
     {
         healthBarFill.fillAmount = (float)enermyAI.currentHealth / enermyAI.maxHealth;
-        Debug.Log("mau cua bot: " + enermyAI.currentHealth + "/" + enermyAI.maxHealth);
     }
 
     public void SetColor(Color color)

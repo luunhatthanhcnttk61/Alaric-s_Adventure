@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,7 @@ public class InventoryUIManager : MonoBehaviour
     private Item currentItem;
     private InventorySlot currentSlot;
 
-    public const int MaxInventorySlots = 24;
+    public const int MaxInventorySlots = 24; 
 
     private void Awake()
     {
@@ -83,6 +84,8 @@ public class InventoryUIManager : MonoBehaviour
     {
         if (Inventory.Instance.Add(item))
         {
+            Debug.Log("AddItem trong InventoryUIManager");
+            Inventory.Instance.LogAllItem();
             UpdateUI();
         }
         else

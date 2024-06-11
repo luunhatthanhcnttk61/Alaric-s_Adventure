@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Text coinsText;
     private int totalCoins = 0;
     public int healthItems = 0;
+    public InventoryUIManager inventoryUIManager;
 
     private void Start()
     {
@@ -83,7 +84,6 @@ public class GameManager : MonoBehaviour
         {
             if (TryAddItemToInventory(newItem))
             {
-                newItem.itemName = itemShop.itemName;
                 Debug.Log("Item added to inventory: " + newItem.itemName);
             }
             else
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
             case ItemType.Sword:
                 SwordItem swordItem = ScriptableObject.CreateInstance<SwordItem>();
                 swordItem.attackPower = itemShop.attackPower;
-                swordItem.itemName = itemShop.itemName;
+                swordItem.itemName = itemShop.itemName ;
                 swordItem.icon = itemShop.icon;
                 newItem = swordItem;
                 break;
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             case ItemType.Armour:
                 ArmourItem armourItem = ScriptableObject.CreateInstance<ArmourItem>();
                 armourItem.armourValue = itemShop.armorValue;
-                armourItem.itemName = itemShop.itemName;
+                armourItem.itemName = itemShop.itemName ;
                 armourItem.icon = itemShop.icon;
                 newItem = armourItem;
                 break;

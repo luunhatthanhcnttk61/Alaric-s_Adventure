@@ -38,7 +38,6 @@ public class Inventory : MonoBehaviour
             }
 
             items.Add(item);
-
             if (onItemChangedCallback != null)
                 onItemChangedCallback.Invoke();
         }
@@ -52,5 +51,12 @@ public class Inventory : MonoBehaviour
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
+    }
+    public void LogAllItem()
+    {
+        foreach(Item item in items) {
+            Debug.Log("Inventory: " + item.itemName);
+        }
+
     }
 }
