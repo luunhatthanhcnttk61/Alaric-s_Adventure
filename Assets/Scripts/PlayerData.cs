@@ -38,7 +38,7 @@ public class PlayerData
                 {
                     itemName = swordItem.itemName,
                     attackPower = swordItem.attackPower,
-                    iconPath = swordItem.icon.name // Assuming icons are saved as resources
+                    iconPath = swordItem.icon.name
                 };
                 inventory.Add(serializableSwordItem);
             }
@@ -48,7 +48,7 @@ public class PlayerData
                 {
                     itemName = armourItem.itemName,
                     armourValue = armourItem.armourValue,
-                    iconPath = armourItem.icon.name // Assuming icons are saved as resources
+                    iconPath = armourItem.icon.name 
                 };
                 inventory.Add(serializableArmourItem);
             }

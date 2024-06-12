@@ -1,49 +1,21 @@
-// using UnityEngine;
-// using UnityEngine.SceneManagement;
-
-// public class MainMenu : MonoBehaviour
-// {
-//     public void StartGame()
-//     {
-//         SceneManager.LoadScene("SampleScene");
-//     }
-
-//     public void ContinueGame()
-//     {
-//         PlayerData data = SaveSystem.LoadPlayer();
-//         if (data != null)
-//         {
-//             SceneManager.LoadScene("GameScene");
-//         }
-//         else
-//         {
-//             Debug.LogError("No save data found!");
-//         }
-//     }
-//     public void ExitGame()
-//     {
-//         Debug.Log("Game is exiting");
-//         Application.Quit();
-//     }
-// }
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject guideCanvas; // Thêm tham chiếu tới GuideCanvas
-    public GameObject mainMenuCanvas; // Thêm tham chiếu tới MainMenuCanvas
+    public GameObject guideCanvas; 
+    public GameObject mainMenuCanvas;
 
     private void Start()
     {
         if (guideCanvas != null)
         {
-            guideCanvas.SetActive(false); // Đảm bảo GuideCanvas bắt đầu ở trạng thái không hiển thị
+            guideCanvas.SetActive(false);
         }
 
         if (mainMenuCanvas != null)
         {
-            mainMenuCanvas.SetActive(true); // Đảm bảo MainMenuCanvas bắt đầu ở trạng thái hiển thị
+            mainMenuCanvas.SetActive(true);
         }
 
         Cursor.lockState = CursorLockMode.None;
@@ -59,13 +31,13 @@ public class MainMenu : MonoBehaviour
     {
         if (guideCanvas != null)
         {
-            guideCanvas.SetActive(true); // Hiển thị GuideCanvas
-            Cursor.lockState = CursorLockMode.None; // Bỏ khóa con trỏ chuột
-            Cursor.visible = true; // Hiển thị con trỏ chuột
+            guideCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
 
             if (mainMenuCanvas != null)
             {
-                mainMenuCanvas.SetActive(false); // Ẩn MainMenuCanvas
+                mainMenuCanvas.SetActive(false);
             }
         }
         else
@@ -78,15 +50,15 @@ public class MainMenu : MonoBehaviour
     {
         if (guideCanvas != null)
         {
-            guideCanvas.SetActive(false); // Tắt GuideCanvas
+            guideCanvas.SetActive(false);
 
             if (mainMenuCanvas != null)
             {
-                mainMenuCanvas.SetActive(true); // Hiển thị MainMenuCanvas
+                mainMenuCanvas.SetActive(true);
             }
 
-            Cursor.lockState = CursorLockMode.None; // Bỏ khóa con trỏ chuột
-            Cursor.visible = true; // Hiển thị con trỏ chuột
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
