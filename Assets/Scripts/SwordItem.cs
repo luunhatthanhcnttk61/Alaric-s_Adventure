@@ -1,6 +1,8 @@
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "New Sword Item", menuName = "Inventory/SwordItem")]
+[Serializable]
 public class SwordItem : Item
 {
     public int attackPower;

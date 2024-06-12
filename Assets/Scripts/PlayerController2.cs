@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class PlayerController2 : MonoBehaviour
 {
     public float moveSpeed;
