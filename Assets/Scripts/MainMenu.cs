@@ -71,7 +71,7 @@ public class MainMenu : MonoBehaviour
         PlayerData data = SaveSystem.LoadPlayer();
         if (data != null)
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene(data.currentScene);
         }
         else
         {

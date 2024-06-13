@@ -1,9 +1,7 @@
 using System;
 
 [Serializable]
-public class SerializableArmourItem
+public class SerializableArmourItem : SerializableItem
 {
-    public string itemName;
     public int armourValue;
-    public string iconPath; // Đường dẫn tới icon
 }
