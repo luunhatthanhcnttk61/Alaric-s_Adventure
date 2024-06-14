@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class PlayerController2 : MonoBehaviour
@@ -208,8 +209,14 @@ public class PlayerController2 : MonoBehaviour
 
         pivot.gameObject.SetActive(false);
         this.enabled = false;
+    StartCoroutine(LoadMainMenuScene());
     }
 
+    private IEnumerator LoadMainMenuScene()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("MainMenu");
+    }
     public void AddArmour(int amount)
     {
         currentArmour += amount;

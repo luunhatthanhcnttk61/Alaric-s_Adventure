@@ -1,4 +1,5 @@
 // using UnityEngine;
+// using UnityEngine.SceneManagement;
 
 // public class UIManager : MonoBehaviour
 // {
@@ -10,19 +11,39 @@
 //         {
 //             Instance = this;
 //             DontDestroyOnLoad(gameObject);
+//             SceneManager.sceneLoaded += OnSceneLoaded;
 //         }
 //         else
 //         {
 //             Destroy(gameObject);
 //         }
 //     }
+
+//     private void OnDestroy()
+//     {
+//         SceneManager.sceneLoaded -= OnSceneLoaded;
+//     }
+
+//     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+//     {
+//         if (scene.name == "MainMenu")
+//         {
+//             gameObject.SetActive(false); 
+//         }
+//         else
+//         {
+//             gameObject.SetActive(true); 
+//         }
+//     }
 // }
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+
+    public GameObject pauseMenuUI;
+    public GameObject itemUsePopup;
 
     private void Awake()
     {
@@ -30,7 +51,6 @@ public class UIManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -38,20 +58,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void ShowPauseMenu()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void HidePauseMenu()
     {
-        if (scene.name == "MainMenu")
-        {
-            gameObject.SetActive(false); 
-        }
-        else
-        {
-            gameObject.SetActive(true); 
-        }
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void ShowItemUsePopup()
+    {
+        itemUsePopup.SetActive(true);
+    }
+
+    public void HideItemUsePopup()
+    {
+        itemUsePopup.SetActive(false);
     }
 }

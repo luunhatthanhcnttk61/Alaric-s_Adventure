@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Gold Sword
   icon: {fileID: 21300000, guid: 11e44719c01db7143b5b190cbba6f531, type: 3}
-  price: 15
+  price: 10
   itemType: 1
   attackPower: 20
   armorValue: 0
